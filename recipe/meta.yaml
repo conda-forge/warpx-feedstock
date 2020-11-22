@@ -10,13 +10,16 @@ package:
 source:
   url: https://github.com/ECP-WarpX/WarpX/archive/{{ version }}.tar.gz
   sha256: {{ sha256 }}
+  patches:
+    # Windows Support
+    # https://github.com/ECP-WarpX/WarpX/pull/1521
+    - 1521.patch
 
 build:
   number: {{ build }}
   run_exports:
     # releases are not (yet) compatible
     - warpx {{ version }}
-  skip: True  # [win]
 
 requirements:
   build:

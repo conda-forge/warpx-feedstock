@@ -1,0 +1,262 @@
+From 4e2b70a26baeecc30c290985fbb51583174278b7 Mon Sep 17 00:00:00 2001
+From: Axel Huebl <axel.huebl@plasma.ninja>
+Date: Fri, 20 Nov 2020 10:57:06 -0800
+Subject: [PATCH 2/7] Windows: _USE_MATH_DEFINES
+
+Fix:
+```
+error C2065: 'M_PI': undeclared identifier
+```
+---
+ CMakeLists.txt | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index c22ef9de72..2d49edcc6e 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -240,6 +240,11 @@ endif()
+ 
+ target_compile_definitions(WarpX PRIVATE
+     WARPX_PARSER_DEPTH=${WarpX_PARSER_DEPTH})
++    
++# <cmath> M_PI et al.
++if(WIN32)
++    target_compile_definitions(WarpX PRIVATE _USE_MATH_DEFINES)
++endif()
+ 
+ 
+ # Warnings ####################################################################
+
+From a7f8071b6faa376a7c2fa9b3a79094d5be4b6419 Mon Sep 17 00:00:00 2001
+From: Axel Huebl <axel.huebl@plasma.ninja>
+Date: Fri, 20 Nov 2020 12:19:37 -0800
+Subject: [PATCH 3/7] Windows: no unistd.h
+
+fix:
+```
+fatal error C1083: Cannot open include file: 'unistd.h':
+No such file or directory
+```
+---
+ CMakeLists.txt | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 2d49edcc6e..18166bffdd 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -240,10 +240,12 @@ endif()
+ 
+ target_compile_definitions(WarpX PRIVATE
+     WARPX_PARSER_DEPTH=${WarpX_PARSER_DEPTH})
+-    
+-# <cmath> M_PI et al.
++
++# <cmath>: M_PI
++# <unistd.h>: parser
+ if(WIN32)
+     target_compile_definitions(WarpX PRIVATE _USE_MATH_DEFINES)
++    target_compile_definitions(WarpX PRIVATE YY_NO_UNISTD_H)
+ endif()
+ 
+ 
+
+From e0732f3a3ce0800bfade3d0d1ff8ab16afc34ff1 Mon Sep 17 00:00:00 2001
+From: Axel Huebl <axel.huebl@plasma.ninja>
+Date: Fri, 20 Nov 2020 17:51:41 -0800
+Subject: [PATCH 4/7] Injector: Trivially Copyable only GPU
+
+Only strictly required when we memcopy to accelerator devices.
+---
+ Source/Initialization/PlasmaInjector.cpp | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/Source/Initialization/PlasmaInjector.cpp b/Source/Initialization/PlasmaInjector.cpp
+index 2fbc7ad19d..d4c9e9ba59 100644
+--- a/Source/Initialization/PlasmaInjector.cpp
++++ b/Source/Initialization/PlasmaInjector.cpp
+@@ -77,12 +77,14 @@ PlasmaInjector::PlasmaInjector (int ispecies, const std::string& name)
+ {
+     ParmParse pp(species_name);
+ 
++#ifdef AMREX_USE_GPU
+     static_assert(std::is_trivially_copyable<InjectorPosition>::value,
+                   "InjectorPosition must be trivially copyable");
+     static_assert(std::is_trivially_copyable<InjectorDensity>::value,
+                   "InjectorDensity must be trivially copyable");
+     static_assert(std::is_trivially_copyable<InjectorMomentum>::value,
+                   "InjectorMomentum must be trivially copyable");
++#endif
+ 
+     pp.query("radially_weighted", radially_weighted);
+     AMREX_ALWAYS_ASSERT_WITH_MESSAGE(radially_weighted, "ERROR: Only radially_weighted=true is supported");
+
+From 24a33bac44cb93f31469383801988a68637bff8e Mon Sep 17 00:00:00 2001
+From: Axel Huebl <axel.huebl@plasma.ninja>
+Date: Fri, 20 Nov 2020 18:17:49 -0800
+Subject: [PATCH 5/7] Flex: never-interactive
+
+We don't use the interactive mode, so we can save some performance
+and address:
+```
+Parser\wp_parser.lex.cpp(1503,40): error C3861: 'isatty': identifier not found
+```
+
+Alternatively, we can include `<io.h>` on Windows.
+---
+ Source/Parser/wp_parser.l       |  1 +
+ Source/Parser/wp_parser.lex.cpp | 15 ++++++---------
+ 2 files changed, 7 insertions(+), 9 deletions(-)
+
+diff --git a/Source/Parser/wp_parser.l b/Source/Parser/wp_parser.l
+index f9c17bdc78..1b8689eb83 100644
+--- a/Source/Parser/wp_parser.l
++++ b/Source/Parser/wp_parser.l
+@@ -1,4 +1,5 @@
+ %option noyywrap nodefault
++%option never-interactive
+ %{
+ #include "wp_parser_y.h"
+ #include "wp_parser.tab.h"
+diff --git a/Source/Parser/wp_parser.lex.cpp b/Source/Parser/wp_parser.lex.cpp
+index 0497ab7d50..bea6503376 100644
+--- a/Source/Parser/wp_parser.lex.cpp
++++ b/Source/Parser/wp_parser.lex.cpp
+@@ -769,16 +769,12 @@ YY_DECL
+ 			yy_current_state = yy_nxt[yy_base[yy_current_state] + yy_c];
+ 			++yy_cp;
+ 			}
+-		while ( yy_base[yy_current_state] != 157 );
++		while ( yy_current_state != 103 );
++		yy_cp = (yy_last_accepting_cpos);
++		yy_current_state = (yy_last_accepting_state);
+ 
+ yy_find_action:
+ 		yy_act = yy_accept[yy_current_state];
+-		if ( yy_act == 0 )
+-			{ /* have to back up */
+-			yy_cp = (yy_last_accepting_cpos);
+-			yy_current_state = (yy_last_accepting_state);
+-			yy_act = yy_accept[yy_current_state];
+-			}
+ 
+ 		YY_DO_BEFORE_ACTION;
+ 
+@@ -1022,7 +1018,8 @@ case YY_STATE_EOF(INITIAL):
+ 
+ 			else
+ 				{
+-				yy_cp = (yy_c_buf_p);
++				yy_cp = (yy_last_accepting_cpos);
++				yy_current_state = (yy_last_accepting_state);
+ 				goto yy_find_action;
+ 				}
+ 			}
+@@ -1500,7 +1497,7 @@ static void yy_load_buffer_state  (void)
+         b->yy_bs_column = 0;
+     }
+ 
+-        b->yy_is_interactive = file ? (isatty( fileno(file) ) > 0) : 0;
++        b->yy_is_interactive = 0;
+     
+ 	errno = oerrno;
+ }
+
+From 240e32f2472194e9a18493f6aeff185cf56fa8f4 Mon Sep 17 00:00:00 2001
+From: Axel Huebl <axel.huebl@plasma.ninja>
+Date: Fri, 20 Nov 2020 17:58:49 -0800
+Subject: [PATCH 6/7] MSVC: Vector<Long> != Vector<long>
+
+Fix return and assignment issues with `amrex::Long` != `long`
+in `amrex::Vector`.
+
+```
+  Particles\MultiParticleContainer.cpp(438,13): error C2440: 'return': cannot convert from 'const amrex::Vector<amrex::Long,std::allocator<__int64>>' to 'amrex::Vector<long,std::allocator<long>>'
+  Particles\MultiParticleContainer.cpp(452,94): error C2440: 'initializing': cannot convert from 'amrex::Vector<amrex::Long,std::allocator<__int64>>' to 'amrex::Vector<long,std::allocator<long>>'
+  Particles\MultiParticleContainer.cpp(459,60): error C2665: 'amrex::ParallelDescriptor::ReduceLongSum': none of the 6 overloads could convert all the argument types
+  Particles\WarpXParticleContainer.cpp(782,51): error C2665: 'amrex::ParallelDescriptor::ReduceLongSum': none of the 6 overloads could convert all the argument types
+```
+---
+ .../ComputeDiagFunctors/PartPerGridFunctor.cpp            | 2 +-
+ Source/Particles/MultiParticleContainer.H                 | 4 ++--
+ Source/Particles/MultiParticleContainer.cpp               | 8 ++++----
+ Source/Particles/WarpXParticleContainer.cpp               | 2 +-
+ 4 files changed, 8 insertions(+), 8 deletions(-)
+
+diff --git a/Source/Diagnostics/ComputeDiagFunctors/PartPerGridFunctor.cpp b/Source/Diagnostics/ComputeDiagFunctors/PartPerGridFunctor.cpp
+index 9f4b0adb88..3679ed88ef 100644
+--- a/Source/Diagnostics/ComputeDiagFunctors/PartPerGridFunctor.cpp
++++ b/Source/Diagnostics/ComputeDiagFunctors/PartPerGridFunctor.cpp
+@@ -14,7 +14,7 @@ void
+ PartPerGridFunctor::operator()(amrex::MultiFab& mf_dst, const int dcomp, const int /*i_buffer*/) const
+ {
+     auto& warpx = WarpX::GetInstance();
+-    const amrex::Vector<long>& npart_in_grid = warpx.GetPartContainer().NumberOfParticlesInGrid(m_lev);
++    const amrex::Vector<amrex::Long>& npart_in_grid = warpx.GetPartContainer().NumberOfParticlesInGrid(m_lev);
+     // Guard cell is set to 1 for generality. However, for a cell-centered
+     // output Multifab, mf_dst, the guard-cell data is not needed especially considering
+     // the operations performend in the CoarsenAndInterpolate function.
+diff --git a/Source/Particles/MultiParticleContainer.H b/Source/Particles/MultiParticleContainer.H
+index ed6c277fec..4cf09ed56c 100644
+--- a/Source/Particles/MultiParticleContainer.H
++++ b/Source/Particles/MultiParticleContainer.H
+@@ -175,9 +175,9 @@ public:
+     *
+     * @param[in] lev the index of the refinement level.
+     */
+-    amrex::Vector<long> GetZeroParticlesInGrid(const int lev) const;
++    amrex::Vector<amrex::Long> GetZeroParticlesInGrid(const int lev) const;
+ 
+-    amrex::Vector<long> NumberOfParticlesInGrid(int lev) const;
++    amrex::Vector<amrex::Long> NumberOfParticlesInGrid(int lev) const;
+ 
+     void Increment (amrex::MultiFab& mf, int lev);
+ 
+diff --git a/Source/Particles/MultiParticleContainer.cpp b/Source/Particles/MultiParticleContainer.cpp
+index cc274655dd..2b1f310b0d 100644
+--- a/Source/Particles/MultiParticleContainer.cpp
++++ b/Source/Particles/MultiParticleContainer.cpp
+@@ -429,7 +429,7 @@ MultiParticleContainer::ApplyBoundaryConditions ()
+     }
+ }
+ 
+-Vector<long>
++Vector<Long>
+ MultiParticleContainer::GetZeroParticlesInGrid (const int lev) const
+ {
+     WarpX& warpx = WarpX::GetInstance();
+@@ -438,18 +438,18 @@ MultiParticleContainer::GetZeroParticlesInGrid (const int lev) const
+     return r;
+ }
+ 
+-Vector<long>
++Vector<Long>
+ MultiParticleContainer::NumberOfParticlesInGrid (int lev) const
+ {
+     if (allcontainers.size() == 0)
+     {
+-        const Vector<long> r = GetZeroParticlesInGrid(lev);
++        const Vector<Long> r = GetZeroParticlesInGrid(lev);
+         return r;
+     }
+     else
+     {
+         const bool only_valid=true, only_local=true;
+-        Vector<long> r = allcontainers[0]->NumberOfParticlesInGrid(lev,only_valid,only_local);
++        Vector<Long> r = allcontainers[0]->NumberOfParticlesInGrid(lev,only_valid,only_local);
+         for (unsigned i = 1, n = allcontainers.size(); i < n; ++i) {
+             const auto& ri = allcontainers[i]->NumberOfParticlesInGrid(lev,only_valid,only_local);
+             for (unsigned j=0, m=ri.size(); j<m; ++j) {
+diff --git a/Source/Particles/WarpXParticleContainer.cpp b/Source/Particles/WarpXParticleContainer.cpp
+index 63b1125c2f..df39bd2507 100644
+--- a/Source/Particles/WarpXParticleContainer.cpp
++++ b/Source/Particles/WarpXParticleContainer.cpp
+@@ -710,7 +710,7 @@ std::array<Real, 3> WarpXParticleContainer::meanParticleVelocity(bool local) {
+     amrex::Real vy_total = 0.0;
+     amrex::Real vz_total = 0.0;
+ 
+-    long np_total = 0;
++    amrex::Long np_total = 0;
+ 
+     amrex::Real inv_clight_sq = 1.0/PhysConst::c/PhysConst::c;
