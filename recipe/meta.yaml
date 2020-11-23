@@ -1,6 +1,6 @@
 {% set name = "warpx" %}
 {% set version = "20.11" %}
-{% set build = 0 %}
+{% set build = 1 %}
 {% set sha256 = "e0e8d9ef9ecb53d2d0f5091939088a538863bc3779ddfeab159b5a51279f399c" %}
 
 package:
@@ -22,6 +22,7 @@ requirements:
   build:
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
+    - ccache
     - clang         # [win]
     - make          # [unix]
     - cmake >=3.14.0
@@ -39,7 +40,9 @@ requirements:
 
 test:
   commands:
+    - test -f ${PREFIX}/bin/warpx.2d.MPI.OMP.DP.OPMD.QED  # [unix]
     - test -f ${PREFIX}/bin/warpx.3d.MPI.OMP.DP.OPMD.QED  # [unix]
+    - test -f ${PREFIX}/bin/warpx.RZ.MPI.OMP.DP.OPMD.QED  # [unix]
 
 about:
   home: https://ecp-warpx.github.io
