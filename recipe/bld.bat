@@ -1,9 +1,6 @@
 set CC=clang-cl.exe
 set CXX=clang-cl.exe
 
-:: work-around for M_PI usage in code
-set "CXXFLAGS=%CXXFLAGS% /D_USE_MATH_DEFINES"
-
 :: -T "ClangCl"
 
 cmake ^

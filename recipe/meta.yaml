@@ -16,7 +16,6 @@ build:
   run_exports:
     # releases are not (yet) compatible
     - warpx {{ version }}
-  skip: true  # [win]
 
 requirements:
   build:
