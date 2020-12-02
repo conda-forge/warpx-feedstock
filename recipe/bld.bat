@@ -11,7 +11,7 @@ cmake ^
     -DCMAKE_BUILD_TYPE=RelWithDebInfo     ^
     -DWarpX_amrex_branch=%PKG_VERSION%    ^
     -DWarpX_openpmd_internal=OFF          ^
-    -DWarpX_picsar_branch=d60c72ff5aa15dbd7e225654964b6c4fb10d52e2 ^
+    -DWarpX_picsar_branch=47c269eb242815f9382da61a110c0c8f12be2d08 ^
     -DWarpX_ASCENT=OFF  ^
     -DWarpX_MPI=OFF     ^
     -DWarpX_OPENPMD=ON  ^

@@ -10,10 +10,6 @@ package:
 source:
   url: https://github.com/ECP-WarpX/WarpX/archive/{{ version }}.tar.gz
   sha256: {{ sha256 }}
-  patches:
-    # RZ alone does not depend on FFTW
-    # https://github.com/ECP-WarpX/WarpX/pull/1498
-    - 1498.patch
 
 build:
   number: {{ build }}
