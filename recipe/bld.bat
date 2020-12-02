@@ -1,11 +1,9 @@
-set CC=clang-cl.exe
-set CXX=clang-cl.exe
-
-:: -T "ClangCl"
-
 cmake ^
     -S . -B build                         ^
+    -G "Ninja"                            ^
     -DCMAKE_BUILD_TYPE=RelWithDebInfo     ^
+    -DCMAKE_C_COMPILER=clang-cl           ^
+    -DCMAKE_CXX_COMPILER=clang-cl         ^
     -DWarpX_amrex_branch=%PKG_VERSION%    ^
     -DWarpX_openpmd_internal=OFF          ^
     -DWarpX_picsar_branch=47c269eb242815f9382da61a110c0c8f12be2d08 ^

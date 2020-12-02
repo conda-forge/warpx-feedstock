@@ -24,6 +24,7 @@ requirements:
     - ccache
     - clang         # [win]
     - make          # [unix]
+    - ninja         # [win]
     - cmake >=3.14.0
     - libgomp       # [linux]
     - llvm-openmp   # [osx or win]
