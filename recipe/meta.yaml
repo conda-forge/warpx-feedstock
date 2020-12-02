@@ -1,7 +1,7 @@
 {% set name = "warpx" %}
-{% set version = "20.11" %}
-{% set build = 2 %}
-{% set sha256 = "e0e8d9ef9ecb53d2d0f5091939088a538863bc3779ddfeab159b5a51279f399c" %}
+{% set version = "20.12" %}
+{% set build = 0 %}
+{% set sha256 = "f241fecd9c5a324efb2c83d4a4b810f0bbb268dfa53b9b6bd2a5e18acc0d7ff4" %}
 
 package:
   name: {{ name|lower }}
@@ -20,7 +20,7 @@ build:
   run_exports:
     # releases are not (yet) compatible
     - warpx {{ version }}
-  skip: True  # [win]
+  skip: true  # [win]
 
 requirements:
   build:
