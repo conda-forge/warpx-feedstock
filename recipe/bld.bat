@@ -29,6 +29,6 @@ if errorlevel 1 exit 1
 :: future: test
 
 :: future: install
-mkdir %LIBRARY_PREFIX%\bin
-cp build\bin\warpx*.exe %LIBRARY_PREFIX%\bin\
+IF NOT EXIST %LIBRARY_PREFIX%\bin md %LIBRARY_PREFIX%\bin
+copy build\bin\warpx*.exe %LIBRARY_PREFIX%\bin\
 
