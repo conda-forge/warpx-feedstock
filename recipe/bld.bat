@@ -1,3 +1,8 @@
+
+echo "CXXFLAGS: %CXXFLAGS%"
+set "CXXFLAGS=%CXXFLAGS% /FI%RECIPE_DIR%\myiso646.h"
+echo "CXXFLAGS: %CXXFLAGS%"
+
 cmake ^
     -S . -B build                         ^
     -G "Ninja"                            ^
