@@ -10,8 +10,7 @@ cmake ^
     -DCMAKE_C_COMPILER=clang-cl           ^
     -DCMAKE_CXX_COMPILER=clang-cl         ^
     -DCMAKE_VERBOSE_MAKEFILE=ON           ^
-    -DWarpX_amrex_repo=https://github.com/ax3l/amrex.git  ^
-    -DWarpX_amrex_branch=fix-andOrWin     ^
+    -DWarpX_amrex_branch=%PKG_VERSION%    ^
     -DWarpX_openpmd_internal=OFF          ^
     -DWarpX_picsar_branch=47c269eb242815f9382da61a110c0c8f12be2d08 ^
     -DWarpX_ASCENT=OFF  ^
