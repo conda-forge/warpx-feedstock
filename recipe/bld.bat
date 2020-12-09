@@ -1,32 +1,41 @@
-set CC=clang-cl.exe
-set CXX=clang-cl.exe
 
-:: work-around for M_PI usage in code
-set "CXXFLAGS=%CXXFLAGS% /D_USE_MATH_DEFINES"
+echo "CXXFLAGS: %CXXFLAGS%"
+set "CXXFLAGS=%CXXFLAGS% /FI%RECIPE_DIR%\myiso646.h"
+echo "CXXFLAGS: %CXXFLAGS%"
 
-:: -T "ClangCl"
+for %%d in (2 3 RZ) do (
+    cmake ^
+        -S . -B build                         ^
+        -G "Ninja"                            ^
+        -DCMAKE_BUILD_TYPE=RelWithDebInfo     ^
+        -DCMAKE_C_COMPILER=clang-cl           ^
+        -DCMAKE_CXX_COMPILER=clang-cl         ^
+        -DCMAKE_VERBOSE_MAKEFILE=ON           ^
+        -DWarpX_amrex_branch=%PKG_VERSION%    ^
+        -DWarpX_openpmd_internal=OFF          ^
+        -DWarpX_picsar_branch=47c269eb242815f9382da61a110c0c8f12be2d08 ^
+        -DWarpX_ASCENT=OFF  ^
+        -DWarpX_MPI=OFF     ^
+        -DWarpX_OPENPMD=ON  ^
+        -DWarpX_PSATD=OFF   ^
+        -DWarpX_QED=ON      ^
+        -DWarpX_DIMS=%%d    ^
+        %SRC_DIR%
+    if errorlevel 1 exit 1
 
-cmake ^
-    -S . -B build                         ^
-    -DCMAKE_BUILD_TYPE=RelWithDebInfo     ^
-    -DWarpX_amrex_branch=%PKG_VERSION%    ^
-    -DWarpX_openpmd_internal=OFF          ^
-    -DWarpX_picsar_branch=d60c72ff5aa15dbd7e225654964b6c4fb10d52e2 ^
-    -DWarpX_ASCENT=OFF  ^
-    -DWarpX_MPI=OFF     ^
-    -DWarpX_OPENPMD=ON  ^
-    -DWarpX_PSATD=OFF   ^
-    -DWarpX_QED=ON      ^
-    -DWarpX_DIMS=3      ^
-    %SRC_DIR%
-if errorlevel 1 exit 1
-
-cmake --build build --config RelWithDebInfo --parallel 2
-if errorlevel 1 exit 1
+    cmake --build build --config RelWithDebInfo --parallel 2
+    if errorlevel 1 exit 1
+)
 
 :: future: test
 
 :: future: install
-mkdir %LIBRARY_PREFIX%\bin
-cp build\bin\warpx*.exe %LIBRARY_PREFIX%\bin\
+:: now: copy all warpx*.exe files
+if not exist %LIBRARY_PREFIX%\bin md %LIBRARY_PREFIX%\bin
+if errorlevel 1 exit 1
 
+for /r "build\bin" %%f in (*.exe) do (
+    echo %%~nf
+    copy %%~nf.exe %LIBRARY_PREFIX%\bin\
+    if errorlevel 1 exit 1
+)
