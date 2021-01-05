@@ -1,7 +1,7 @@
 {% set name = "warpx" %}
-{% set version = "20.12" %}
+{% set version = "21.01" %}
 {% set build = 0 %}
-{% set sha256 = "f241fecd9c5a324efb2c83d4a4b810f0bbb268dfa53b9b6bd2a5e18acc0d7ff4" %}
+{% set sha256 = "436ea97c2fea0a80be0168846d77c07d7402daef4977f5272209961da6bdd13f" %}
 
 package:
   name: {{ name|lower }}
@@ -16,7 +16,6 @@ build:
   run_exports:
     # releases are not (yet) compatible
     - warpx {{ version }}
-  skip: True  # [win]
 
 requirements:
   build:
@@ -26,7 +25,7 @@ requirements:
     - clang         # [win]
     - make          # [unix]
     - ninja         # [win]
-    - cmake >=3.14.0
+    - cmake >=3.15.0
     - libgomp       # [linux]
     - llvm-openmp   # [osx or win]
   host:
