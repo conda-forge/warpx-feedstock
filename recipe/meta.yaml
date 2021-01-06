@@ -43,6 +43,9 @@ test:
     - test -f ${PREFIX}/bin/warpx.2d.MPI.OMP.DP.OPMD.QED  # [unix]
     - test -f ${PREFIX}/bin/warpx.3d.MPI.OMP.DP.OPMD.QED  # [unix]
     - test -f ${PREFIX}/bin/warpx.RZ.MPI.OMP.DP.OPMD.QED  # [unix]
+    - if exist %LIBRARY_PREFIX%\bin\warpx.2d.NOMPI.OMP.DP.OPMD.QED.exe (exit 0) else (exit 1)  # [win]
+    - if exist %LIBRARY_PREFIX%\bin\warpx.3d.NOMPI.OMP.DP.OPMD.QED.exe (exit 0) else (exit 1)  # [win]
+    - if exist %LIBRARY_PREFIX%\bin\warpx.RZ.NOMPI.OMP.DP.OPMD.QED.exe (exit 0) else (exit 1)  # [win]
 
 about:
   home: https://ecp-warpx.github.io

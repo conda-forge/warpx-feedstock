@@ -36,6 +36,7 @@ if errorlevel 1 exit 1
 
 for /r "build\bin" %%f in (*.exe) do (
     echo %%~nf
-    copy %%~nf.exe %LIBRARY_PREFIX%\bin\
+    dir
+    copy build\bin\%%~nf.exe %LIBRARY_PREFIX%\bin\
     if errorlevel 1 exit 1
 )
