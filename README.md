@@ -23,6 +23,13 @@ Current build status
 
 
 <table><tr>
+    <td>Travis</td>
+    <td>
+      <a href="https://travis-ci.com/conda-forge/warpx-feedstock">
+        <img alt="macOS" src="https://img.shields.io/travis/com/conda-forge/warpx-feedstock/master.svg?label=macOS">
+      </a>
+    </td>
+  </tr><tr>
     <td>Drone</td>
     <td>
       <a href="https://cloud.drone.io/conda-forge/warpx-feedstock">
@@ -96,6 +103,20 @@ Current build status
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=11275&branchName=master">
                   <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/warpx-feedstock?branchName=master&jobName=osx&configuration=osx_64_boost_cpp1.74.0" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>win_64_boost_cpp1.72.0</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=11275&branchName=master">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/warpx-feedstock?branchName=master&jobName=win&configuration=win_64_boost_cpp1.72.0" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>win_64_boost_cpp1.74.0</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=11275&branchName=master">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/warpx-feedstock?branchName=master&jobName=win&configuration=win_64_boost_cpp1.74.0" alt="variant">
                 </a>
               </td>
             </tr>
