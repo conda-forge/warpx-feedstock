@@ -16,14 +16,6 @@ jobs:
         CONFIG: linux_64_boost_cpp1.74.0
         UPLOAD_PACKAGES: 'True'
         DOCKER_IMAGE: quay.io/condaforge/linux-anvil-comp7
-      linux_ppc64le_boost_cpp1.72.0:
-        CONFIG: linux_ppc64le_boost_cpp1.72.0
-        UPLOAD_PACKAGES: 'True'
-        DOCKER_IMAGE: quay.io/condaforge/linux-anvil-ppc64le
-      linux_ppc64le_boost_cpp1.74.0:
-        CONFIG: linux_ppc64le_boost_cpp1.74.0
-        UPLOAD_PACKAGES: 'True'
-        DOCKER_IMAGE: quay.io/condaforge/linux-anvil-ppc64le
   timeoutInMinutes: 360
 
   steps:
