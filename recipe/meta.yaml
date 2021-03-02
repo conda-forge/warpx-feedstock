@@ -30,13 +30,22 @@ requirements:
     - llvm-openmp   # [osx or win]
   host:
     - boost-cpp
+    - mpi4py
     - openmpi                      # [unix]
     - openpmd-api * mpi_openmpi_*  # [unix]
     - openpmd-api                  # [win]
+    - pip
+    - setuptools
+    - wheel
 # future
 #    - fftw * mpi_openmpi_*         # [unix]
 #    - fftw                         # [win]
 # a variant could provide CUDA support
+  run:
+    - numpy
+    - periodictable
+    - python
+    - scipy
 
 test:
   commands:

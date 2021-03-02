@@ -1,6 +1,4 @@
 
-echo "CXXFLAGS: %CXXFLAGS%"
-
 for %%d in (2 3 RZ) do (
     cmake ^
         -S . -B build                         ^
@@ -9,10 +7,9 @@ for %%d in (2 3 RZ) do (
         -DCMAKE_C_COMPILER=clang-cl           ^
         -DCMAKE_CXX_COMPILER=clang-cl         ^
         -DCMAKE_VERBOSE_MAKEFILE=ON           ^
-        -DWarpX_amrex_branch=%PKG_VERSION%    ^
         -DWarpX_openpmd_internal=OFF          ^
-        -DWarpX_picsar_branch=47c269eb242815f9382da61a110c0c8f12be2d08 ^
         -DWarpX_ASCENT=OFF  ^
+        -DWarpX_LIB=ON      ^
         -DWarpX_MPI=OFF     ^
         -DWarpX_OPENPMD=ON  ^
         -DWarpX_PSATD=OFF   ^
@@ -24,11 +21,12 @@ for %%d in (2 3 RZ) do (
     cmake --build build --config RelWithDebInfo --parallel 2
     if errorlevel 1 exit 1
 )
+:: future (if skipping AMReX headers) - inside above loop
+::  cmake --build build --config RelWithDebInfo --target install
+::  if errorlevel 1 exit 1
 
-:: future: test
-
-:: future: install
-:: now: copy all warpx*.exe files
+:: simple install
+::   copy all warpx*.exe and warpx*.dll files
 if not exist %LIBRARY_PREFIX%\bin md %LIBRARY_PREFIX%\bin
 if errorlevel 1 exit 1
 
@@ -38,3 +36,13 @@ for /r "build\bin" %%f in (*.exe) do (
     copy build\bin\%%~nf.exe %LIBRARY_PREFIX%\bin\
     if errorlevel 1 exit 1
 )
+for /r "build\lib" %%f in (*.dll) do (
+    echo %%~nf
+    dir
+    copy build\lib\%%~nf.dll %LIBRARY_PREFIX%\lib\
+    if errorlevel 1 exit 1
+)
+
+:: add Python API (PICMI interface)
+PYWARPX_LIB_DIR=%LIBRARY_PREFIX%\lib python3 -m pip wheel .
+python3 -m pip install pywarpx-*whl
