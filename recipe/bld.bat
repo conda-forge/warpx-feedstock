@@ -1,3 +1,9 @@
+@echo on
+
+set "NM=llvm-nm.exe"
+set "LD=lld-link.exe"
+set "AR=llvm-ar.exe"
+set "RANLIB=llvm-ranlib.exe"
 
 :: simple install prep
 ::   copy all warpx*.exe and warpx*.dll files
@@ -11,6 +17,8 @@ for %%d in (2 3 RZ) do (
         -DCMAKE_BUILD_TYPE=RelWithDebInfo     ^
         -DCMAKE_C_COMPILER=clang-cl           ^
         -DCMAKE_CXX_COMPILER=clang-cl         ^
+        -DCMAKE_LINKER=%LD%                   ^
+        -DCMAKE_NM=%NM%                       ^
         -DCMAKE_VERBOSE_MAKEFILE=ON           ^
         -DWarpX_openpmd_internal=OFF          ^
         -DWarpX_ASCENT=OFF  ^
