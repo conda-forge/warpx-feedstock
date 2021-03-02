@@ -1,7 +1,5 @@
 
 echo "CXXFLAGS: %CXXFLAGS%"
-set "CXXFLAGS=%CXXFLAGS% /FI%RECIPE_DIR%\myiso646.h"
-echo "CXXFLAGS: %CXXFLAGS%"
 
 for %%d in (2 3 RZ) do (
     cmake ^
