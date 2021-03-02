@@ -1,4 +1,9 @@
 
+:: simple install prep
+::   copy all warpx*.exe and warpx*.dll files
+if not exist %LIBRARY_PREFIX%\bin md %LIBRARY_PREFIX%\bin
+if errorlevel 1 exit 1
+
 for %%d in (2 3 RZ) do (
     cmake ^
         -S . -B build                         ^
@@ -20,28 +25,25 @@ for %%d in (2 3 RZ) do (
 
     cmake --build build --config RelWithDebInfo --parallel 2
     if errorlevel 1 exit 1
+
+    for /r "build\bin" %%f in (*.exe) do (
+        echo %%~nf
+        dir
+        copy build\bin\%%~nf.exe %LIBRARY_PREFIX%\bin\
+        if errorlevel 1 exit 1
+    )
+    for /r "build\lib" %%f in (*.dll) do (
+        echo %%~nf
+        dir
+        copy build\lib\%%~nf.dll %LIBRARY_PREFIX%\lib\
+        if errorlevel 1 exit 1
+    )
+    
+    rmdir /s /q build
 )
 :: future (if skipping AMReX headers) - inside above loop
 ::  cmake --build build --config RelWithDebInfo --target install
 ::  if errorlevel 1 exit 1
-
-:: simple install
-::   copy all warpx*.exe and warpx*.dll files
-if not exist %LIBRARY_PREFIX%\bin md %LIBRARY_PREFIX%\bin
-if errorlevel 1 exit 1
-
-for /r "build\bin" %%f in (*.exe) do (
-    echo %%~nf
-    dir
-    copy build\bin\%%~nf.exe %LIBRARY_PREFIX%\bin\
-    if errorlevel 1 exit 1
-)
-for /r "build\lib" %%f in (*.dll) do (
-    echo %%~nf
-    dir
-    copy build\lib\%%~nf.dll %LIBRARY_PREFIX%\lib\
-    if errorlevel 1 exit 1
-)
 
 :: add Python API (PICMI interface)
 PYWARPX_LIB_DIR=%LIBRARY_PREFIX%\lib python3 -m pip wheel .
