@@ -11,6 +11,8 @@ set CXXFLAGS=
 if not exist %LIBRARY_PREFIX%\bin md %LIBRARY_PREFIX%\bin
 if errorlevel 1 exit 1
 
+:: CMAKE_AR and CMAKE_RANLIB are needed for IPO with clang-cl
+
 for %%d in (2 3 RZ) do (
     cmake ^
         -S . -B build                         ^
@@ -18,10 +20,8 @@ for %%d in (2 3 RZ) do (
         -DCMAKE_BUILD_TYPE=RelWithDebInfo     ^
         -DCMAKE_C_COMPILER=clang-cl           ^
         -DCMAKE_CXX_COMPILER=clang-cl         ^
-        -DCMAKE_AR=%AR%                       ^
-        -DCMAKE_LINKER=%LD%                   ^
-        -DCMAKE_NM=%NM%                       ^
-        -DCMAKE_RANLIB=%RANLIB%               ^
+        -DCMAKE_AR=%BUILD_PREFIX%\bin\llvm-ar.exe   ^
+        -DCMAKE_RANLIB=%BUILD_PREFIX%\bin\llvm-ranlib.exe   ^
         -DCMAKE_VERBOSE_MAKEFILE=ON           ^
         -DWarpX_ASCENT=OFF  ^
         -DWarpX_LIB=ON      ^
