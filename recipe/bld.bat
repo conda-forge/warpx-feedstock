@@ -1,14 +1,5 @@
 @echo on
 
-set "CXX=clang++.exe"
-set "CC=clang.exe"
-set "NM=llvm-nm.exe"
-set "LD=lld-link.exe"
-set "AR=llvm-ar.exe"
-set "RANLIB=llvm-ranlib.exe"
-set "NM=llvm-nm.exe"
-set "LD=lld-link.exe"
-
 :: simple install prep
 ::   copy all warpx*.exe and warpx*.dll files
 if not exist %LIBRARY_PREFIX%\bin md %LIBRARY_PREFIX%\bin
@@ -19,8 +10,8 @@ for %%d in (2 3 RZ) do (
         -S . -B build                         ^
         -G "Ninja"                            ^
         -DCMAKE_BUILD_TYPE=RelWithDebInfo     ^
-        -DCMAKE_C_COMPILER=%CC%               ^
-        -DCMAKE_CXX_COMPILER=%CXX%            ^
+        -DCMAKE_C_COMPILER=clang-cl           ^
+        -DCMAKE_CXX_COMPILER=clang-cl         ^
         -DCMAKE_AR=%AR%                       ^
         -DCMAKE_LINKER=%LD%                   ^
         -DCMAKE_NM=%NM%                       ^
