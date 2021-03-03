@@ -1,9 +1,18 @@
 @echo on
 
+set "CXX=clang++.exe"
+set "CC=clang.exe"
 set "NM=llvm-nm.exe"
 set "LD=lld-link.exe"
 set "AR=llvm-ar.exe"
 set "RANLIB=llvm-ranlib.exe"
+set "NM=llvm-nm.exe"
+set "LD=lld-link.exe"
+
+set "CPPFLAGS_USED=-D_CRT_SECURE_NO_WARNINGS -D_MT -D_DLL -nostdlib -Xclang --dependent-lib=msvcrt -fuse-ld=lld -fno-aligned-allocation"
+set "LDFLAGS=-nostdlib -Xclang --dependent-lib=msvcrt -fuse-ld=lld -Wl,-defaultlib:%CONDA_PREFIX%/lib/clang/@PKG_VERSION@/lib/windows/clang_rt.builtins-x86_64.lib"
+set "CFLAGS=@CFLAGS@ %CPPFLAGS_USED%"
+set "CXXFLAGS=@CXXFLAGS@ %CPPFLAGS_USED%"
 
 :: simple install prep
 ::   copy all warpx*.exe and warpx*.dll files
@@ -17,8 +26,10 @@ for %%d in (2 3 RZ) do (
         -DCMAKE_BUILD_TYPE=RelWithDebInfo     ^
         -DCMAKE_C_COMPILER=clang-cl           ^
         -DCMAKE_CXX_COMPILER=clang-cl         ^
+        -DCMAKE_AR=%AR%                       ^
         -DCMAKE_LINKER=%LD%                   ^
         -DCMAKE_NM=%NM%                       ^
+        -DCMAKE_RANLIB=%RANLIB%               ^
         -DCMAKE_VERBOSE_MAKEFILE=ON           ^
         -DWarpX_openpmd_internal=OFF          ^
         -DWarpX_ASCENT=OFF  ^
