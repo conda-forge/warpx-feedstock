@@ -21,9 +21,8 @@ requirements:
   build:
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
+    - {{ compiler('clang') }}  # [win]
     - ccache
-    - clang         # [win]
-    - clangxx       # [win]
     - make          # [unix]
     - ninja         # [win]
     - cmake >=3.15.0
