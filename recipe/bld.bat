@@ -20,8 +20,8 @@ for %%d in (2 3 RZ) do (
         -DCMAKE_BUILD_TYPE=RelWithDebInfo     ^
         -DCMAKE_C_COMPILER=clang-cl           ^
         -DCMAKE_CXX_COMPILER=clang-cl         ^
-        -DCMAKE_AR=%BUILD_PREFIX%/bin/llvm-ar.exe   ^
-        -DCMAKE_RANLIB=%BUILD_PREFIX%/bin/llvm-ranlib.exe   ^
+        -DCMAKE_AR=llvm-ar.exe   ^
+        -DCMAKE_RANLIB=llvm-ranlib.exe   ^
         -DCMAKE_VERBOSE_MAKEFILE=ON           ^
         -DWarpX_ASCENT=OFF  ^
         -DWarpX_LIB=ON      ^
