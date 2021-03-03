@@ -1,5 +1,11 @@
 @echo on
 
+:: overwrite Clang with GNU CLI activation
+:: https://github.com/conda-forge/clang-win-activation-feedstock/blob/724a3900c88ef1748a9c1d90d0c2927db99c3ef5/recipe/activate-clang_win-64.bat#L3-L8
+set LDFLAGS=
+set CFLAGS=
+set CXXFLAGS=
+
 :: simple install prep
 ::   copy all warpx*.exe and warpx*.dll files
 if not exist %LIBRARY_PREFIX%\bin md %LIBRARY_PREFIX%\bin
@@ -10,8 +16,8 @@ for %%d in (2 3 RZ) do (
         -S . -B build                         ^
         -G "Ninja"                            ^
         -DCMAKE_BUILD_TYPE=RelWithDebInfo     ^
-        -DCMAKE_C_COMPILER=%CC%               ^
-        -DCMAKE_CXX_COMPILER=%CXX%            ^
+        -DCMAKE_C_COMPILER=clang-cl           ^
+        -DCMAKE_CXX_COMPILER=clang-cl         ^
         -DCMAKE_AR=%AR%                       ^
         -DCMAKE_LINKER=%LD%                   ^
         -DCMAKE_NM=%NM%                       ^
