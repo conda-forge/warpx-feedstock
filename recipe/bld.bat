@@ -10,18 +10,17 @@ for %%d in (2 3 RZ) do (
         -S . -B build                         ^
         -G "Ninja"                            ^
         -DCMAKE_BUILD_TYPE=RelWithDebInfo     ^
-        -DCMAKE_C_COMPILER=clang-cl           ^
-        -DCMAKE_CXX_COMPILER=clang-cl         ^
+        -DCMAKE_C_COMPILER=%CC%               ^
+        -DCMAKE_CXX_COMPILER=%CXX%            ^
         -DCMAKE_AR=%AR%                       ^
         -DCMAKE_LINKER=%LD%                   ^
         -DCMAKE_NM=%NM%                       ^
         -DCMAKE_RANLIB=%RANLIB%               ^
         -DCMAKE_VERBOSE_MAKEFILE=ON           ^
-        -DWarpX_openpmd_internal=OFF          ^
         -DWarpX_ASCENT=OFF  ^
         -DWarpX_LIB=ON      ^
         -DWarpX_MPI=OFF     ^
-        -DWarpX_OPENPMD=ON  ^
+        -DWarpX_OPENPMD=OFF ^
         -DWarpX_PSATD=OFF   ^
         -DWarpX_QED=ON      ^
         -DWarpX_DIMS=%%d    ^
