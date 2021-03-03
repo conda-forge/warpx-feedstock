@@ -24,8 +24,8 @@ for %%d in (2 3 RZ) do (
         -S . -B build                         ^
         -G "Ninja"                            ^
         -DCMAKE_BUILD_TYPE=RelWithDebInfo     ^
-        -DCMAKE_C_COMPILER=clang-cl           ^
-        -DCMAKE_CXX_COMPILER=clang-cl         ^
+        -DCMAKE_C_COMPILER=%CC%               ^
+        -DCMAKE_CXX_COMPILER=%CXX%            ^
         -DCMAKE_AR=%AR%                       ^
         -DCMAKE_LINKER=%LD%                   ^
         -DCMAKE_NM=%NM%                       ^
