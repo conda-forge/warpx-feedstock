@@ -6,6 +6,9 @@ set LDFLAGS=
 set CFLAGS=
 set CXXFLAGS=
 
+:: CMake binutil hints need forward slashes in paths
+set "BUILD_PREFIX_FWD=%BUILD_PREFIX:\=/%"
+
 :: simple install prep
 ::   copy all warpx*.exe and warpx*.dll files
 if not exist %LIBRARY_PREFIX%\bin md %LIBRARY_PREFIX%\bin
@@ -20,8 +23,8 @@ for %%d in (2 3 RZ) do (
         -DCMAKE_BUILD_TYPE=RelWithDebInfo     ^
         -DCMAKE_C_COMPILER=clang-cl           ^
         -DCMAKE_CXX_COMPILER=clang-cl         ^
-        -DCMAKE_AR=llvm-ar.exe   ^
-        -DCMAKE_RANLIB=llvm-ranlib.exe   ^
+        -DCMAKE_AR=%BUILD_PREFIX_FWD%/Library/bin/llvm-ar.exe         ^
+        -DCMAKE_RANLIB=%BUILD_PREFIX_FWD%/Library/bin/llvm-ranlib.exe ^
         -DCMAKE_VERBOSE_MAKEFILE=ON           ^
         -DWarpX_ASCENT=OFF  ^
         -DWarpX_LIB=ON      ^
