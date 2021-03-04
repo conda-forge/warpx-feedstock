@@ -28,7 +28,7 @@ for %%d in (2 3 RZ) do (
         -DWarpX_ASCENT=OFF  ^
         -DWarpX_LIB=ON      ^
         -DWarpX_MPI=OFF     ^
-        -DWarpX_OPENPMD=OFF ^
+        -DWarpX_OPENPMD=ON  ^
         -DWarpX_PSATD=OFF   ^
         -DWarpX_QED=ON      ^
         -DWarpX_DIMS=%%d    ^
