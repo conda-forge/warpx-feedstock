@@ -58,5 +58,6 @@ for %%d in (2 3 RZ) do (
 ::  if errorlevel 1 exit 1
 
 :: add Python API (PICMI interface)
-PYWARPX_LIB_DIR=%LIBRARY_PREFIX%\lib python3 -m pip wheel .
-python3 -m pip install pywarpx-*whl
+set "PYWARPX_LIB_DIR=%LIBRARY_PREFIX%\lib"
+%PYTHON% -m pip wheel .
+%PYTHON% -m pip install --find-links=. pywarpx
