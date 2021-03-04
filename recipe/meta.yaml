@@ -31,7 +31,8 @@ requirements:
     - ninja         # [win]
     - cmake >=3.15.0
     - libgomp       # [linux]
-    - llvm-openmp   # [osx or win]
+    - llvm-openmp   # [osx]
+    - intel-openmp  # [win]
   host:
     - boost-cpp
     - mpi4py                       # [unix]
