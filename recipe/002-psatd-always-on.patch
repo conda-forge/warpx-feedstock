@@ -1,0 +1,207 @@
+From 86550513476fda97f9a7ec18727f3ba392dd11b9 Mon Sep 17 00:00:00 2001
+From: Axel Huebl <axel.huebl@plasma.ninja>
+Date: Tue, 2 Mar 2021 00:43:19 -0800
+Subject: [PATCH] Fix warpx_interp: Unconditional PSATD
+
+Fix the `warpx_interp` function to properly enable/disable PSATD
+logic based on runtime logic.
+
+Co-authored-by: Edoardo Zoni <59625522+EZoni@users.noreply.github.com>
+---
+ Source/Parallelization/WarpXComm.cpp |  12 +--
+ Source/Parallelization/WarpXComm_K.H | 127 +++++++++++++--------------
+ 2 files changed, 69 insertions(+), 70 deletions(-)
+
+diff --git a/Source/Parallelization/WarpXComm.cpp b/Source/Parallelization/WarpXComm.cpp
+index b331e6c7de..caf0c0584e 100644
+--- a/Source/Parallelization/WarpXComm.cpp
++++ b/Source/Parallelization/WarpXComm.cpp
+@@ -87,22 +87,22 @@ WarpX::UpdateAuxilaryDataStagToNodal ()
+             amrex::Real const * stencil_coeffs_z = WarpX::device_centering_stencil_coeffs_z.data();
+             amrex::ParallelFor(bx, [=] AMREX_GPU_DEVICE (int j, int k, int l) noexcept
+             {
+-                warpx_interp(j, k, l, bx_aux, bx_fp, Bx_stag, fg_nox, fg_noy, fg_noz,
++                warpx_interp<true>(j, k, l, bx_aux, bx_fp, Bx_stag, fg_nox, fg_noy, fg_noz,
+                              stencil_coeffs_x, stencil_coeffs_y, stencil_coeffs_z);
+ 
+-                warpx_interp(j, k, l, by_aux, by_fp, By_stag, fg_nox, fg_noy, fg_noz,
++                warpx_interp<true>(j, k, l, by_aux, by_fp, By_stag, fg_nox, fg_noy, fg_noz,
+                              stencil_coeffs_x, stencil_coeffs_y, stencil_coeffs_z);
+ 
+-                warpx_interp(j, k, l, bz_aux, bz_fp, Bz_stag, fg_nox, fg_noy, fg_noz,
++                warpx_interp<true>(j, k, l, bz_aux, bz_fp, Bz_stag, fg_nox, fg_noy, fg_noz,
+                              stencil_coeffs_x, stencil_coeffs_y, stencil_coeffs_z);
+ 
+-                warpx_interp(j, k, l, ex_aux, ex_fp, Ex_stag, fg_nox, fg_noy, fg_noz,
++                warpx_interp<true>(j, k, l, ex_aux, ex_fp, Ex_stag, fg_nox, fg_noy, fg_noz,
+                              stencil_coeffs_x, stencil_coeffs_y, stencil_coeffs_z);
+ 
+-                warpx_interp(j, k, l, ey_aux, ey_fp, Ey_stag, fg_nox, fg_noy, fg_noz,
++                warpx_interp<true>(j, k, l, ey_aux, ey_fp, Ey_stag, fg_nox, fg_noy, fg_noz,
+                              stencil_coeffs_x, stencil_coeffs_y, stencil_coeffs_z);
+ 
+-                warpx_interp(j, k, l, ez_aux, ez_fp, Ez_stag, fg_nox, fg_noy, fg_noz,
++                warpx_interp<true>(j, k, l, ez_aux, ez_fp, Ez_stag, fg_nox, fg_noy, fg_noz,
+                              stencil_coeffs_x, stencil_coeffs_y, stencil_coeffs_z);
+             });
+ #endif
+diff --git a/Source/Parallelization/WarpXComm_K.H b/Source/Parallelization/WarpXComm_K.H
+index d5012c3ec7..64c5d0f7c1 100644
+--- a/Source/Parallelization/WarpXComm_K.H
++++ b/Source/Parallelization/WarpXComm_K.H
+@@ -506,6 +506,7 @@ void warpx_interp_nd_efield_z (int j, int k, int l,
+  * \param[in] stencil_coeffs_y array of ordered Fornberg coefficients for finite-order interpolation stencil along y
+  * \param[in] stencil_coeffs_z array of ordered Fornberg coefficients for finite-order interpolation stencil along z
+  */
++template< bool IS_PSATD = false >
+ AMREX_GPU_DEVICE AMREX_FORCE_INLINE
+ void warpx_interp (const int j,
+                    const int k,
+@@ -590,85 +591,83 @@ void warpx_interp (const int j,
+ 
+     amrex::Real res = 0.0_rt;
+ 
+-#ifndef WARPX_USE_PSATD // FDTD (linear interpolation)
+-
+-    // Example of 1D linear interpolation from nodal grid to nodal grid:
+-    //
+-    //         j
+-    // --o-----o-----o--  result(j) = f(j)
+-    // --o-----o-----o--
+-    //  j-1    j    j+1
+-    //
+-    // Example of 1D linear interpolation from staggered grid to nodal grid:
+-    //
+-    //         j
+-    // --o-----o-----o--  result(j) = (f(j-1) + f(j)) / 2
+-    // -----x-----x-----
+-    //     j-1    j
+-
+-    for (int ll = lmin; ll <= lmax; ll++)
+-    {
+-        for (int kk = kmin; kk <= kmax; kk++)
++    // FDTD (linear interpolation)
++    if( !IS_PSATD ) {
++        // Example of 1D linear interpolation from nodal grid to nodal grid:
++        //
++        //         j
++        // --o-----o-----o--  result(j) = f(j)
++        // --o-----o-----o--
++        //  j-1    j    j+1
++        //
++        // Example of 1D linear interpolation from staggered grid to nodal grid:
++        //
++        //         j
++        // --o-----o-----o--  result(j) = (f(j-1) + f(j)) / 2
++        // -----x-----x-----
++        //     j-1    j
++
++        for (int ll = lmin; ll <= lmax; ll++)
+         {
+-            for (int jj = jmin; jj <= jmax; jj++)
++            for (int kk = kmin; kk <= kmax; kk++)
+             {
+-                res += src_arr_zeropad(jj,kk,ll);
++                for (int jj = jmin; jj <= jmax; jj++)
++                {
++                    res += src_arr_zeropad(jj,kk,ll);
++                }
+             }
+         }
+-    }
+-
+-#else // PSATD (finite-order interpolation)
+-
+-    const int nj = jmax - jmin;
+-    const int nk = kmax - kmin;
+-    const int nl = lmax - lmin;
++    // PSATD (finite-order interpolation)
++    } else {
++        const int nj = jmax - jmin;
++        const int nk = kmax - kmin;
++        const int nl = lmax - lmin;
+ 
+-    amrex::Real cj = 1.0_rt;
+-    amrex::Real ck = 1.0_rt;
+-    amrex::Real cl = 1.0_rt;
++        amrex::Real cj = 1.0_rt;
++        amrex::Real ck = 1.0_rt;
++        amrex::Real cl = 1.0_rt;
+ 
+-    amrex::Real const* scj = stencil_coeffs_x;
+-#if   (AMREX_SPACEDIM == 2)
+-    amrex::Real const* sck = stencil_coeffs_z;
++        amrex::Real const* scj = stencil_coeffs_x;
++#if (AMREX_SPACEDIM == 2)
++        amrex::Real const* sck = stencil_coeffs_z;
+ #elif (AMREX_SPACEDIM == 3)
+-    amrex::Real const* sck = stencil_coeffs_y;
+-    amrex::Real const* scl = stencil_coeffs_z;
++        amrex::Real const* sck = stencil_coeffs_y;
++        amrex::Real const* scl = stencil_coeffs_z;
+ #endif
+ 
+-    // Example of 1D finite-order interpolation from nodal grid to nodal grid:
+-    //
+-    //         j
+-    // --o-----o-----o--  result(j) = f(j)
+-    // --o-----o-----o--
+-    //  j-1    j    j+1
+-    //
+-    // Example of 1D finite-order interpolation from staggered grid to nodal grid:
+-    //
+-    //                     j
+-    // --o-----o-----o-----o-----o-----o-----o--  result(j) = c_0 * (f(j-1) + f(j)  ) / 2
+-    // -----x-----x-----x-----x-----x-----x-----            + c_1 * (f(j-2) + f(j+1)) / 2
+-    //     j-3   j-2   j-1    j    j+1   j+2                + c_2 * (f(j-3) + f(j+2)) / 2
+-    //     c_2   c_1   c_0   c_0   c_1   c_2                + ...
+-
+-    for (int ll = 0; ll <= nl; ll++)
+-    {
++        // Example of 1D finite-order interpolation from nodal grid to nodal grid:
++        //
++        //         j
++        // --o-----o-----o--  result(j) = f(j)
++        // --o-----o-----o--
++        //  j-1    j    j+1
++        //
++        // Example of 1D finite-order interpolation from staggered grid to nodal grid:
++        //
++        //                     j
++        // --o-----o-----o-----o-----o-----o-----o--  result(j) = c_0 * (f(j-1) + f(j)  ) / 2
++        // -----x-----x-----x-----x-----x-----x-----            + c_1 * (f(j-2) + f(j+1)) / 2
++        //     j-3   j-2   j-1    j    j+1   j+2                + c_2 * (f(j-3) + f(j+2)) / 2
++        //     c_2   c_1   c_0   c_0   c_1   c_2                + ...
++
++        for (int ll = 0; ll <= nl; ll++)
++        {
+ #if (AMREX_SPACEDIM == 3)
+-        if (interp_l) cl = scl[ll];
++            if (interp_l) cl = scl[ll];
+ #endif
+-        for (int kk = 0; kk <= nk; kk++)
+-        {
+-            if (interp_k) ck = sck[kk];
+-
+-            for (int jj = 0; jj <= nj; jj++)
++            for (int kk = 0; kk <= nk; kk++)
+             {
+-                if (interp_j) cj = scj[jj];
++                if (interp_k) ck = sck[kk];
+ 
+-                res += cj * ck * cl * src_arr_zeropad(jmin+jj,kmin+kk,lmin+ll);
++                for (int jj = 0; jj <= nj; jj++)
++                {
++                    if (interp_j) cj = scj[jj];
++
++                    res += cj * ck * cl * src_arr_zeropad(jmin+jj,kmin+kk,lmin+ll);
++                }
+             }
+         }
+-    }
+-
+-#endif // PSATD (finite-order interpolation)
++    } // PSATD (finite-order interpolation)
+ 
+     dst_arr(j,k,l) = wj * wk * wl * res;
+ }

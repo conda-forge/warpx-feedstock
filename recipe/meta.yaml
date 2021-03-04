@@ -14,6 +14,9 @@ source:
     # Fix .dll search in setup.py
     # https://github.com/ECP-WarpX/WarpX/pull/1759
     - 001-setup-py-dll.patch
+    # Fix FDTD if PSATD is compiled in
+    # https://github.com/ECP-WarpX/WarpX/pull/1587
+    - 002-psatd-always-on.patch
 
 build:
   number: {{ build }}
@@ -42,10 +45,12 @@ requirements:
     - python
     - setuptools
     - wheel
-# future
-#    - fftw * mpi_openmpi_*         # [unix]
-#    - fftw                         # [win]
-# a variant could provide CUDA support
+    - fftw * mpi_openmpi_*         # [unix]
+    - fftw                         # [win]
+    - pkgconfig
+# future:
+#    - blaspp
+#    - lapackpp
   run:
     - numpy
     - periodictable
@@ -56,12 +61,12 @@ test:
   imports:
     - pywarpx
   commands:
-    - test -f ${PREFIX}/bin/warpx.2d.MPI.OMP.DP.OPMD.QED  # [unix]
-    - test -f ${PREFIX}/bin/warpx.3d.MPI.OMP.DP.OPMD.QED  # [unix]
-    - test -f ${PREFIX}/bin/warpx.RZ.MPI.OMP.DP.OPMD.QED  # [unix]
-    - if exist %LIBRARY_PREFIX%\bin\warpx.2d.NOMPI.OMP.DP.OPMD.QED.exe (exit 0) else (exit 1)  # [win]
-    - if exist %LIBRARY_PREFIX%\bin\warpx.3d.NOMPI.OMP.DP.OPMD.QED.exe (exit 0) else (exit 1)  # [win]
-    - if exist %LIBRARY_PREFIX%\bin\warpx.RZ.NOMPI.OMP.DP.OPMD.QED.exe (exit 0) else (exit 1)  # [win]
+    - test -f ${PREFIX}/bin/warpx.2d.MPI.OMP.DP.OPMD.PSATD.QED  # [unix]
+    - test -f ${PREFIX}/bin/warpx.3d.MPI.OMP.DP.OPMD.PSATD.QED  # [unix]
+    - test -f ${PREFIX}/bin/warpx.RZ.MPI.OMP.DP.OPMD.PSATD.QED  # [unix]
+    - if exist %LIBRARY_PREFIX%\bin\warpx.2d.NOMPI.OMP.DP.OPMD.PSATD.QED.exe (exit 0) else (exit 1)  # [win]
+    - if exist %LIBRARY_PREFIX%\bin\warpx.3d.NOMPI.OMP.DP.OPMD.PSATD.QED.exe (exit 0) else (exit 1)  # [win]
+    - if exist %LIBRARY_PREFIX%\bin\warpx.RZ.NOMPI.OMP.DP.OPMD.PSATD.QED.exe (exit 0) else (exit 1)  # [win]
 
 about:
   home: https://ecp-warpx.github.io

@@ -17,6 +17,10 @@ if errorlevel 1 exit 1
 :: CMAKE_AR and CMAKE_RANLIB are needed for IPO with clang-cl
 
 for %%d in (2 3 RZ) do (
+
+    set USE_PSATD=ON
+    if "%d%" == "RZ" set "USE_PSATD=OFF"
+
     cmake ^
         -S . -B build                         ^
         -G "Ninja"                            ^
@@ -29,7 +33,7 @@ for %%d in (2 3 RZ) do (
         -DWarpX_LIB=ON      ^
         -DWarpX_MPI=OFF     ^
         -DWarpX_OPENPMD=ON  ^
-        -DWarpX_PSATD=OFF   ^
+        -DWarpX_PSATD=%USE_PSATD% ^
         -DWarpX_QED=ON      ^
         -DWarpX_DIMS=%%d    ^
         %SRC_DIR%
