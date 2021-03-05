@@ -53,5 +53,5 @@ cp build/bin/warpx.* ${PREFIX}/bin/
 cp build/lib/libwarpx.* ${PREFIX}/lib/
 
 # add Python API (PICMI interface)
-PYWARPX_LIB_DIR=$PREFIX/lib python3 -m pip wheel .
-python3 -m pip install pywarpx-*whl
+export PYWARPX_LIB_DIR=$PREFIX/lib
+$PYTHON -m pip install . -vv --no-build-isolation
