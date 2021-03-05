@@ -10,13 +10,9 @@ channel_targets:
 - conda-forge main
 cxx_compiler:
 - vs2017
-fftw:
-- '3'
 pin_run_as_build:
   boost-cpp:
     max_pin: x.x.x
-  fftw:
-    max_pin: x
   python:
     min_pin: x.x
     max_pin: x.x
