@@ -33,6 +33,7 @@ for %%d in (2 3 RZ) do (
         -DWarpX_LIB=ON      ^
         -DWarpX_MPI=OFF     ^
         -DWarpX_OPENPMD=ON  ^
+        -DWarpX_openpmd_internal=OFF ^
         -DWarpX_PSATD=%USE_PSATD% ^
         -DWarpX_QED=ON      ^
         -DWarpX_DIMS=%%d    ^
