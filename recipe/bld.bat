@@ -13,6 +13,7 @@ for %%d in (2 3) do (
         -DCMAKE_C_COMPILER=clang-cl           ^
         -DCMAKE_CXX_COMPILER=clang-cl         ^
         -DCMAKE_LINKER=lld-link               ^
+        -DCMAKE_NM=llvm-nm                    ^
         -DCMAKE_VERBOSE_MAKEFILE=ON           ^
         -DWarpX_ASCENT=OFF  ^
         -DWarpX_LIB=ON      ^
