@@ -16,6 +16,11 @@ fi
 
 for dim in "2" "3" "RZ"
 do
+    USE_PSATD=ON
+    if [[ ${dim} == "RZ" ]]; then
+        USE_PSATD=OFF
+    fi
+
     cmake \
         -S . -B build                         \
         -DCMAKE_BUILD_TYPE=RelWithDebInfo     \
@@ -23,12 +28,11 @@ do
         -DCMAKE_CXX_STANDARD=${CXX_STANDARD}  \
         -DCMAKE_INSTALL_LIBDIR=lib            \
         -DCMAKE_INSTALL_PREFIX=${PREFIX}      \
-        -DWarpX_amrex_branch=${PKG_VERSION}   \
         -DWarpX_openpmd_internal=OFF          \
-        -DWarpX_picsar_branch=47c269eb242815f9382da61a110c0c8f12be2d08 \
         -DWarpX_ASCENT=OFF  \
+        -DWarpX_LIB=ON      \
         -DWarpX_OPENPMD=ON  \
-        -DWarpX_PSATD=OFF   \
+        -DWarpX_PSATD=${USE_PSATD} \
         -DWarpX_QED=ON      \
         -DWarpX_DIMS=${dim} \
         ${SRC_DIR}
@@ -37,10 +41,17 @@ do
 
     # future:
     #CTEST_OUTPUT_ON_FAILURE=1 make ${VERBOSE_CM} test
+
+    # future (if skipping AMReX headers)
+    #cmake --build build --target install
 done
 
-# future:
-#make install
-mkdir -p ${PREFIX}/bin
+# simple install
+#   copy all binaries and libwarpx* files
+mkdir -p ${PREFIX}/bin ${PREFIX}/lib
 cp build/bin/warpx.* ${PREFIX}/bin/
+cp build/lib/libwarpx.* ${PREFIX}/lib/
 
+# add Python API (PICMI interface)
+export PYWARPX_LIB_DIR=$PREFIX/lib
+$PYTHON -m pip install . -vv --no-build-isolation

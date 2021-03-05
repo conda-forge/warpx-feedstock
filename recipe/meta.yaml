@@ -1,7 +1,7 @@
 {% set name = "warpx" %}
-{% set version = "21.02" %}
+{% set version = "21.03" %}
 {% set build = 0 %}
-{% set sha256 = "735c92ef62a47ad1d6973eaf6bef36fd8c4fff920b896c04deb38440689be137" %}
+{% set sha256 = "a8931e0dabf868e14b1e913b31ab7ff31164441a9f8a967c298512dd6230fe46" %}
 
 package:
   name: {{ name|lower }}
@@ -10,6 +10,13 @@ package:
 source:
   url: https://github.com/ECP-WarpX/WarpX/archive/{{ version }}.tar.gz
   sha256: {{ sha256 }}
+  patches:
+    # Fix .dll search in setup.py
+    # https://github.com/ECP-WarpX/WarpX/pull/1759
+    - 001-setup-py-dll.patch
+    # Fix FDTD if PSATD is compiled in
+    # https://github.com/ECP-WarpX/WarpX/pull/1587
+    - 002-psatd-always-on.patch
 
 build:
   number: {{ build }}
@@ -23,6 +30,7 @@ requirements:
     - {{ compiler('cxx') }}
     - ccache
     - clang         # [win]
+    - lld           # [win]
     - make          # [unix]
     - ninja         # [win]
     - cmake >=3.15.0
@@ -30,19 +38,34 @@ requirements:
     - llvm-openmp   # [osx or win]
   host:
     - boost-cpp
+    - mpi4py                       # [unix]
     - openmpi                      # [unix]
     - openpmd-api * mpi_openmpi_*  # [unix]
     - openpmd-api                  # [win]
-# future
-#    - fftw * mpi_openmpi_*         # [unix]
+    - pip
+    - python
+    - setuptools
+    - wheel
+    - fftw * mpi_openmpi_*         # [unix]
+# linker issues on m.lib
 #    - fftw                         # [win]
-# a variant could provide CUDA support
+    - pkgconfig
+# future:
+#    - blaspp
+#    - lapackpp
+  run:
+    - numpy
+    - periodictable
+    - python
+    - scipy
 
 test:
+  imports:
+    - pywarpx
   commands:
-    - test -f ${PREFIX}/bin/warpx.2d.MPI.OMP.DP.OPMD.QED  # [unix]
-    - test -f ${PREFIX}/bin/warpx.3d.MPI.OMP.DP.OPMD.QED  # [unix]
-    - test -f ${PREFIX}/bin/warpx.RZ.MPI.OMP.DP.OPMD.QED  # [unix]
+    - test -f ${PREFIX}/bin/warpx.2d.MPI.OMP.DP.OPMD.PSATD.QED  # [unix]
+    - test -f ${PREFIX}/bin/warpx.3d.MPI.OMP.DP.OPMD.PSATD.QED  # [unix]
+    - test -f ${PREFIX}/bin/warpx.RZ.MPI.OMP.DP.OPMD.QED        # [unix]
     - if exist %LIBRARY_PREFIX%\bin\warpx.2d.NOMPI.OMP.DP.OPMD.QED.exe (exit 0) else (exit 1)  # [win]
     - if exist %LIBRARY_PREFIX%\bin\warpx.3d.NOMPI.OMP.DP.OPMD.QED.exe (exit 0) else (exit 1)  # [win]
     - if exist %LIBRARY_PREFIX%\bin\warpx.RZ.NOMPI.OMP.DP.OPMD.QED.exe (exit 0) else (exit 1)  # [win]

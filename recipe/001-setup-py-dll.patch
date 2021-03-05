@@ -1,0 +1,23 @@
+From 9ad2341739baaccf184709a46efc139c3b620d4f Mon Sep 17 00:00:00 2001
+From: Axel Huebl <axel.huebl@plasma.ninja>
+Date: Thu, 4 Mar 2021 00:55:47 -0800
+Subject: [PATCH] setup.py: libwarpx*.dll
+
+forgotten renaming
+---
+ setup.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/setup.py b/setup.py
+index 79aa95c0f1..a0702294de 100644
+--- a/setup.py
++++ b/setup.py
+@@ -24,7 +24,7 @@ def run(self):
+         build.run(self)
+ 
+         # matches: libwarpx.(2d|3d|rz).(so|pyd)
+-        re_libprefix = re.compile(r"libwarpx\...\.(?:so|pyd)")
++        re_libprefix = re.compile(r"libwarpx\...\.(?:so|dll)")
+         libs_found = []
+         for lib_name in os.listdir(PYWARPX_LIB_DIR):
+             if re_libprefix.match(lib_name):
