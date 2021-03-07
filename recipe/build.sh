@@ -31,6 +31,7 @@ do
         -DWarpX_openpmd_internal=OFF          \
         -DWarpX_ASCENT=OFF  \
         -DWarpX_LIB=ON      \
+        -DWarpX_MPI=OFF     \
         -DWarpX_OPENPMD=ON  \
         -DWarpX_PSATD=${USE_PSATD} \
         -DWarpX_QED=ON      \
