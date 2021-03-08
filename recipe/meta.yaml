@@ -1,6 +1,6 @@
 {% set name = "warpx" %}
 {% set version = "21.03" %}
-{% set build = 1 %}
+{% set build = 2 %}
 {% set sha256 = "a8931e0dabf868e14b1e913b31ab7ff31164441a9f8a967c298512dd6230fe46" %}
 
 package:
@@ -40,7 +40,9 @@ requirements:
     - libgomp       # [linux]
     - llvm-openmp   # [osx or win]
   host:
+    - blaspp
     - boost-cpp
+    - lapackpp
     - openpmd-api
     - pip
     - python
@@ -48,9 +50,9 @@ requirements:
     - wheel
     - fftw
     - pkgconfig
-# future:
-#    - blaspp
-#    - lapackpp
+# ninja: error: 'D:/bld/warpx_1615224319242/_h_env/Library/lib/lapack.lib', needed by 'lib/warpx.RZ.NOMPI.OMP.DP.OPMD.PSATD.QED.dll', missing and no known rule to make it
+    - liblapack   # [win]
+    - liblapacke  # [win]
   run:
     - numpy
     - periodictable
@@ -63,10 +65,10 @@ test:
   commands:
     - test -f ${PREFIX}/bin/warpx.2d.NOMPI.OMP.DP.OPMD.PSATD.QED  # [unix]
     - test -f ${PREFIX}/bin/warpx.3d.NOMPI.OMP.DP.OPMD.PSATD.QED  # [unix]
-    - test -f ${PREFIX}/bin/warpx.RZ.NOMPI.OMP.DP.OPMD.QED        # [unix]
+    - test -f ${PREFIX}/bin/warpx.RZ.NOMPI.OMP.DP.OPMD.PSATD.QED  # [unix]
     - if exist %LIBRARY_PREFIX%\bin\warpx.2d.NOMPI.OMP.DP.OPMD.PSATD.QED.exe (exit 0) else (exit 1)  # [win]
     - if exist %LIBRARY_PREFIX%\bin\warpx.3d.NOMPI.OMP.DP.OPMD.PSATD.QED.exe (exit 0) else (exit 1)  # [win]
-    - if exist %LIBRARY_PREFIX%\bin\warpx.RZ.NOMPI.OMP.DP.OPMD.QED.exe (exit 0) else (exit 1)  # [win]
+    - if exist %LIBRARY_PREFIX%\bin\warpx.RZ.NOMPI.OMP.DP.OPMD.PSATD.QED.exe (exit 0) else (exit 1)  # [win]
 
 about:
   home: https://ecp-warpx.github.io

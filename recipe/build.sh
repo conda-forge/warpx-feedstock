@@ -16,11 +16,6 @@ fi
 
 for dim in "2" "3" "RZ"
 do
-    USE_PSATD=ON
-    if [[ ${dim} == "RZ" ]]; then
-        USE_PSATD=OFF
-    fi
-
     cmake \
         -S . -B build                         \
         -DCMAKE_BUILD_TYPE=RelWithDebInfo     \
@@ -33,7 +28,7 @@ do
         -DWarpX_LIB=ON      \
         -DWarpX_MPI=OFF     \
         -DWarpX_OPENPMD=ON  \
-        -DWarpX_PSATD=${USE_PSATD} \
+        -DWarpX_PSATD=ON    \
         -DWarpX_QED=ON      \
         -DWarpX_DIMS=${dim} \
         ${SRC_DIR}
