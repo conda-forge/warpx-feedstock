@@ -1,6 +1,6 @@
 {% set name = "warpx" %}
 {% set version = "21.03" %}
-{% set build = 2 %}
+{% set build = 3 %}
 {% set sha256 = "a8931e0dabf868e14b1e913b31ab7ff31164441a9f8a967c298512dd6230fe46" %}
 
 package:
@@ -56,6 +56,7 @@ requirements:
   run:
     - numpy
     - periodictable
+    - picmistandard ==0.0.14
     - python
     - scipy
 
