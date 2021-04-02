@@ -10,16 +10,6 @@ package:
 source:
   url: https://github.com/ECP-WarpX/WarpX/archive/{{ version }}.tar.gz
   sha256: {{ sha256 }}
-  patches:
-    # Fix .dll search in setup.py
-    # https://github.com/ECP-WarpX/WarpX/pull/1759
-    - 001-setup-py-dll.patch
-    # Fix FDTD if PSATD is compiled in
-    # https://github.com/ECP-WarpX/WarpX/pull/1587
-    - 002-psatd-always-on.patch
-    # Support FFTW3(f)Config.cmake
-    # https://github.com/ECP-WarpX/WarpX/pull/1765
-    - 003-fftw-cmake-config.patch
 
 build:
   number: {{ build }}
