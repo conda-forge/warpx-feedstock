@@ -1,7 +1,7 @@
 {% set name = "warpx" %}
-{% set version = "21.03" %}
-{% set build = 3 %}
-{% set sha256 = "a8931e0dabf868e14b1e913b31ab7ff31164441a9f8a967c298512dd6230fe46" %}
+{% set version = "21.04" %}
+{% set build = 0 %}
+{% set sha256 = "51d2d8b4542eada96216e8b128c0545c4b7527addc2038efebe586c32c4020a0" %}
 
 package:
   name: {{ name|lower }}
@@ -10,16 +10,6 @@ package:
 source:
   url: https://github.com/ECP-WarpX/WarpX/archive/{{ version }}.tar.gz
   sha256: {{ sha256 }}
-  patches:
-    # Fix .dll search in setup.py
-    # https://github.com/ECP-WarpX/WarpX/pull/1759
-    - 001-setup-py-dll.patch
-    # Fix FDTD if PSATD is compiled in
-    # https://github.com/ECP-WarpX/WarpX/pull/1587
-    - 002-psatd-always-on.patch
-    # Support FFTW3(f)Config.cmake
-    # https://github.com/ECP-WarpX/WarpX/pull/1765
-    - 003-fftw-cmake-config.patch
 
 build:
   number: {{ build }}
