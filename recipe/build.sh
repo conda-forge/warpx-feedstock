@@ -14,6 +14,12 @@ elif [[ ${CXXFLAGS} == *"-std="* ]]; then
     exit 1
 fi
 
+# IPO/LTO does only work with certain toolchains
+WarpX_IPO=ON
+if [[ ${target_platform} =~ osx.* ]]; then
+    WarpX_IPO=OFF
+fi
+
 for dim in "2" "3" "RZ"
 do
     cmake \
@@ -24,6 +30,7 @@ do
         -DCMAKE_INSTALL_LIBDIR=lib            \
         -DCMAKE_INSTALL_PREFIX=${PREFIX}      \
         -DWarpX_openpmd_internal=OFF          \
+        -DWarpX_IPO=${WarpX_IPO}              \
         -DWarpX_ASCENT=OFF  \
         -DWarpX_LIB=ON      \
         -DWarpX_MPI=OFF     \
