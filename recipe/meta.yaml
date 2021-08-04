@@ -33,7 +33,7 @@ requirements:
     - blaspp
     - boost-cpp
     - lapackpp
-    - openpmd-api
+    - openpmd-api ==0.13.4
     - pip
     - python
     - setuptools
