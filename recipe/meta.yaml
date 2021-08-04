@@ -21,7 +21,7 @@ requirements:
   build:
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
-    - ccache
+    - ccache        # [unix]
     - clang         # [win]
     - lld           # [win]
     - make          # [unix]
