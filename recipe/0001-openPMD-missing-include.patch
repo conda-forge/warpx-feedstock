@@ -1,0 +1,22 @@
+From 0f7b13b47fa2e39459aae9fc5e7d04d1718c7ee7 Mon Sep 17 00:00:00 2001
+From: Axel Huebl <axel.huebl@plasma.ninja>
+Date: Wed, 4 Aug 2021 00:57:17 -0700
+Subject: [PATCH] openPMD: Missing Include
+
+Fix compile issue on Conda-Forge (Windows with Clang).
+---
+ Source/Diagnostics/WarpXOpenPMD.cpp | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/Source/Diagnostics/WarpXOpenPMD.cpp b/Source/Diagnostics/WarpXOpenPMD.cpp
+index 28a787d924..9330466662 100644
+--- a/Source/Diagnostics/WarpXOpenPMD.cpp
++++ b/Source/Diagnostics/WarpXOpenPMD.cpp
+@@ -35,6 +35,7 @@
+ #include <AMReX_StructOfArrays.H>
+ 
+ #include <algorithm>
++#include <cctype>
+ #include <cstdint>
+ #include <iostream>
+ #include <map>
