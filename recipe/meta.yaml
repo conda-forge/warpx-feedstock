@@ -24,6 +24,8 @@ requirements:
     - ccache        # [unix]
     - clang         # [win]
     - lld           # [win]
+    # TODO: add libxml2 dep in lld-feedstock
+    - libxml2       # [win]
     - make          # [unix]
     - ninja         # [win]
     - cmake >=3.15.0
