@@ -10,10 +10,6 @@ package:
 source:
   url: https://github.com/ECP-WarpX/WarpX/archive/{{ version }}.tar.gz
   sha256: {{ sha256 }}
-  patches:
-    # openPMD: Missing Include
-    # https://github.com/ECP-WarpX/WarpX/pull/2162
-    - 0001-openPMD-missing-include.patch
 
 build:
   number: {{ build }}
@@ -39,7 +35,7 @@ requirements:
     - blaspp
     - boost-cpp
     - lapackpp
-    - openpmd-api ==0.13.4
+    - openpmd-api
     - pip
     - python
     - setuptools
