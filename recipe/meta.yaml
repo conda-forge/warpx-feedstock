@@ -1,7 +1,7 @@
 {% set name = "warpx" %}
-{% set version = "21.08" %}
+{% set version = "21.09" %}
 {% set build = 0 %}
-{% set sha256 = "6128a32cfd075bc63d08eebea6d4f62d33ce0570f4fd72330a71023ceacccc86" %}
+{% set sha256 = "861a65f11846541c803564db133c8678b9e8779e69902ef1637b21399d257eab" %}
 
 package:
   name: {{ name|lower }}
@@ -10,10 +10,6 @@ package:
 source:
   url: https://github.com/ECP-WarpX/WarpX/archive/{{ version }}.tar.gz
   sha256: {{ sha256 }}
-  patches:
-    # openPMD: Missing Include
-    # https://github.com/ECP-WarpX/WarpX/pull/2162
-    - 0001-openPMD-missing-include.patch
 
 build:
   number: {{ build }}
@@ -39,7 +35,7 @@ requirements:
     - blaspp
     - boost-cpp
     - lapackpp
-    - openpmd-api ==0.13.4
+    - openpmd-api
     - pip
     - python
     - setuptools
