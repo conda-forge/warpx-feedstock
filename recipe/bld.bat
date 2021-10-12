@@ -16,6 +16,7 @@ for %%d in (2 3 RZ) do (
         -DCMAKE_NM=llvm-nm                    ^
         -DCMAKE_VERBOSE_MAKEFILE=ON           ^
         -DWarpX_ASCENT=OFF  ^
+        -DWarpX_COMPUTE=NOACC ^
         -DWarpX_LIB=ON      ^
         -DWarpX_MPI=OFF     ^
         -DWarpX_OPENPMD=ON  ^
