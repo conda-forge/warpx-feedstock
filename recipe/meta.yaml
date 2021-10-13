@@ -53,6 +53,11 @@ requirements:
     - scipy
 
 test:
+  source_files:
+    - Examples/Physics_applications/laser_acceleration/inputs_*
+  files:
+    - test.sh   # [unix]
+    - test.bat  # [win]
   imports:
     - pywarpx
   commands:
@@ -62,6 +67,9 @@ test:
     - if exist %LIBRARY_PREFIX%\bin\warpx.2d.NOMPI.NOACC.DP.OPMD.PSATD.QED.exe (exit 0) else (exit 1)  # [win]
     - if exist %LIBRARY_PREFIX%\bin\warpx.3d.NOMPI.NOACC.DP.OPMD.PSATD.QED.exe (exit 0) else (exit 1)  # [win]
     - if exist %LIBRARY_PREFIX%\bin\warpx.RZ.NOMPI.NOACC.DP.OPMD.PSATD.QED.exe (exit 0) else (exit 1)  # [win]
+    # smoke tests: execute
+    - ./test.sh      # [unix and build_platform == target_platform]
+    - call test.bat  # [win]
 
 about:
   home: https://ecp-warpx.github.io
