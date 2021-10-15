@@ -64,9 +64,9 @@ test:
     - test -f ${PREFIX}/bin/warpx.2d.NOMPI.OMP.DP.OPMD.PSATD.QED  # [unix]
     - test -f ${PREFIX}/bin/warpx.3d.NOMPI.OMP.DP.OPMD.PSATD.QED  # [unix]
     - test -f ${PREFIX}/bin/warpx.RZ.NOMPI.OMP.DP.OPMD.PSATD.QED  # [unix]
-    - if exist %LIBRARY_PREFIX%\bin\warpx.2d.NOMPI.NOACC.DP.OPMD.PSATD.QED.exe (exit 0) else (exit 1)  # [win]
-    - if exist %LIBRARY_PREFIX%\bin\warpx.3d.NOMPI.NOACC.DP.OPMD.PSATD.QED.exe (exit 0) else (exit 1)  # [win]
-    - if exist %LIBRARY_PREFIX%\bin\warpx.RZ.NOMPI.NOACC.DP.OPMD.PSATD.QED.exe (exit 0) else (exit 1)  # [win]
+    - if not exist %LIBRARY_PREFIX%\bin\warpx.2d.NOMPI.NOACC.DP.OPMD.PSATD.QED.exe exit 1  # [win]
+    - if not exist %LIBRARY_PREFIX%\bin\warpx.3d.NOMPI.NOACC.DP.OPMD.PSATD.QED.exe exit 1  # [win]
+    - if not exist %LIBRARY_PREFIX%\bin\warpx.RZ.NOMPI.NOACC.DP.OPMD.PSATD.QED.exe exit 1  # [win]
     # smoke tests: execute
     - ./test.sh      # [unix and build_platform == target_platform]
     - call test.bat  # [win]
