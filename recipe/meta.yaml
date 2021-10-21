@@ -1,6 +1,6 @@
 {% set name = "warpx" %}
 {% set version = "21.10" %}
-{% set build = 2 %}
+{% set build = 3 %}
 {% set sha256 = "d372c573f0360094d5982d64eceeb0149d6620eb75e8fdbfdc6777f3328fb454" %}
 
 package:
@@ -64,9 +64,9 @@ test:
     - test -f ${PREFIX}/bin/warpx.2d.NOMPI.OMP.DP.OPMD.PSATD.QED  # [unix]
     - test -f ${PREFIX}/bin/warpx.3d.NOMPI.OMP.DP.OPMD.PSATD.QED  # [unix]
     - test -f ${PREFIX}/bin/warpx.RZ.NOMPI.OMP.DP.OPMD.PSATD.QED  # [unix]
-    - if not exist %LIBRARY_PREFIX%\bin\warpx.2d.NOMPI.NOACC.DP.OPMD.PSATD.QED.exe exit 1  # [win]
-    - if not exist %LIBRARY_PREFIX%\bin\warpx.3d.NOMPI.NOACC.DP.OPMD.PSATD.QED.exe exit 1  # [win]
-    - if not exist %LIBRARY_PREFIX%\bin\warpx.RZ.NOMPI.NOACC.DP.OPMD.PSATD.QED.exe exit 1  # [win]
+    - if not exist %LIBRARY_PREFIX%\bin\warpx.2d.NOMPI.OMP.DP.OPMD.PSATD.QED.exe exit 1  # [win]
+    - if not exist %LIBRARY_PREFIX%\bin\warpx.3d.NOMPI.OMP.DP.OPMD.PSATD.QED.exe exit 1  # [win]
+    - if not exist %LIBRARY_PREFIX%\bin\warpx.RZ.NOMPI.OMP.DP.OPMD.PSATD.QED.exe exit 1  # [win]
     # smoke tests: execute
     - ./test.sh      # [unix and build_platform == target_platform]
     - call test.bat  # [win]
