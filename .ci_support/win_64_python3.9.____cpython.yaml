@@ -12,6 +12,10 @@ cxx_compiler:
 - vs2017
 fftw:
 - '3'
+libblas:
+- 3.8 *netlib
+libcblas:
+- 3.8 *netlib
 liblapack:
 - 3.8 *netlib
 liblapacke:
