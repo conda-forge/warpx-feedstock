@@ -1,7 +1,7 @@
 {% set name = "warpx" %}
-{% set version = "21.10" %}
-{% set build = 4 %}
-{% set sha256 = "d372c573f0360094d5982d64eceeb0149d6620eb75e8fdbfdc6777f3328fb454" %}
+{% set version = "21.11" %}
+{% set build = 0 %}
+{% set sha256 = "ce60377771c732033a77351cd3500b24b5d14b54a5adc7a622767b9251c10d0b" %}
 
 package:
   name: {{ name|lower }}
@@ -19,6 +19,8 @@ build:
 
 requirements:
   build:
+    - python                                 # [build_platform != target_platform]
+    - cross-python_{{ target_platform }}     # [build_platform != target_platform]
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
     - ccache        # [unix]
@@ -45,6 +47,9 @@ requirements:
 # ninja: error: 'D:/bld/warpx_1615224319242/_h_env/Library/lib/lapack.lib', needed by 'lib/warpx.RZ.NOMPI.OMP.DP.OPMD.PSATD.QED.dll', missing and no known rule to make it
     - liblapack   # [win]
     - liblapacke  # [win]
+# ninja: error: 'D:/bld/warpx_1635938394765/_h_env/Library/lib/blas.lib', needed by 'lib/warpx.RZ.NOMPI.OMP.DP.OPMD.PSATD.QED.dll', missing and no known rule to make it
+    - libblas   # [win]
+    - libcblas  # [win]
   run:
     - numpy
     - periodictable
