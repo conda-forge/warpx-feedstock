@@ -1,7 +1,7 @@
 {% set name = "warpx" %}
-{% set version = "21.11" %}
+{% set version = "21.12" %}
 {% set build = 0 %}
-{% set sha256 = "ce60377771c732033a77351cd3500b24b5d14b54a5adc7a622767b9251c10d0b" %}
+{% set sha256 = "847c98aac20c73d94c823378803c82be9a14139f1c14ea483757229b452ce4c1" %}
 
 package:
   name: {{ name|lower }}
@@ -10,6 +10,10 @@ package:
 source:
   url: https://github.com/ECP-WarpX/WarpX/archive/{{ version }}.tar.gz
   sha256: {{ sha256 }}
+  patches:
+    # The symbolic aliases for our +lib target were missing in the install location
+    # https://github.com/ECP-WarpX/WarpX/pull/2626
+    - 2626.patch
 
 build:
   number: {{ build }}
