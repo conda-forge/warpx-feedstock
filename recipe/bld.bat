@@ -5,7 +5,7 @@
 if not exist %LIBRARY_PREFIX%\bin md %LIBRARY_PREFIX%\bin
 if errorlevel 1 exit 1
 
-for %%d in (2 3 RZ) do (
+for %%d in (1 2 3 RZ) do (
     cmake ^
         -S . -B build                         ^
         -G "Ninja"                            ^

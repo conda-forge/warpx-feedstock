@@ -1,6 +1,6 @@
 {% set name = "warpx" %}
 {% set version = "21.12" %}
-{% set build = 0 %}
+{% set build = 1 %}
 {% set sha256 = "847c98aac20c73d94c823378803c82be9a14139f1c14ea483757229b452ce4c1" %}
 
 package:
@@ -57,7 +57,7 @@ requirements:
   run:
     - numpy
     - periodictable
-    - picmistandard ==0.0.14
+    - picmistandard ==0.0.16
     - python
     - scipy
 
@@ -70,9 +70,11 @@ test:
   imports:
     - pywarpx
   commands:
+    - test -f ${PREFIX}/bin/warpx.1d.NOMPI.OMP.DP.OPMD.PSATD.QED  # [unix]
     - test -f ${PREFIX}/bin/warpx.2d.NOMPI.OMP.DP.OPMD.PSATD.QED  # [unix]
     - test -f ${PREFIX}/bin/warpx.3d.NOMPI.OMP.DP.OPMD.PSATD.QED  # [unix]
     - test -f ${PREFIX}/bin/warpx.RZ.NOMPI.OMP.DP.OPMD.PSATD.QED  # [unix]
+    - if not exist %LIBRARY_PREFIX%\bin\warpx.1d.NOMPI.OMP.DP.OPMD.PSATD.QED.exe exit 1  # [win]
     - if not exist %LIBRARY_PREFIX%\bin\warpx.2d.NOMPI.OMP.DP.OPMD.PSATD.QED.exe exit 1  # [win]
     - if not exist %LIBRARY_PREFIX%\bin\warpx.3d.NOMPI.OMP.DP.OPMD.PSATD.QED.exe exit 1  # [win]
     - if not exist %LIBRARY_PREFIX%\bin\warpx.RZ.NOMPI.OMP.DP.OPMD.PSATD.QED.exe exit 1  # [win]
