@@ -20,7 +20,7 @@ if [[ ${target_platform} =~ osx.* ]]; then
     WarpX_IPO=OFF
 fi
 
-for dim in "2" "3" "RZ"
+for dim in "1" "2" "3" "RZ"
 do
     cmake \
         -S . -B build                         \
