@@ -10,10 +10,6 @@ package:
 source:
   url: https://github.com/ECP-WarpX/WarpX/archive/{{ version }}.tar.gz
   sha256: {{ sha256 }}
-  patches:
-    # The symbolic aliases for our +lib target were missing in the install location
-    # https://github.com/ECP-WarpX/WarpX/pull/2626
-    - 2626.patch
 
 build:
   number: {{ build }}
@@ -57,13 +53,14 @@ requirements:
   run:
     - numpy
     - periodictable
-    - picmistandard ==0.0.16
+    - picmistandard ==0.0.18
     - python
     - scipy
 
 test:
   source_files:
     - Examples/Physics_applications/laser_acceleration/inputs_*
+    - Examples/Physics_applications/laser_acceleration/PICMI_inputs_*
   files:
     - test.sh   # [unix]
     - test.bat  # [win]

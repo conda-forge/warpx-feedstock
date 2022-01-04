@@ -11,12 +11,26 @@ if errorlevel 1 exit 1
 warpx.2d.NOMPI.OMP.DP.OPMD.PSATD.QED.exe %TEST_DIR%\inputs_2d max_step=50 diag1.intervals=10 diag1.format=openpmd
 if errorlevel 1 exit 1
 
-:: 1D - input in 22.01+
-::warpx.1d.NOMPI.OMP.DP.OPMD.PSATD.QED.exe %TEST_DIR%\inputs_1d max_step=50 diag1.intervals=10 diag1.format=openpmd
-::if errorlevel 1 exit 1
-
-:: RZ
-warpx.RZ.NOMPI.OMP.DP.OPMD.PSATD.QED.exe %TEST_DIR%\inputs_2d_rz max_step=50 diag1.intervals=10 diag1.format=openpmd
+:: 1D
+warpx.1d.NOMPI.OMP.DP.OPMD.PSATD.QED.exe %TEST_DIR%\inputs_1d max_step=50 diag1.intervals=10 diag1.format=openpmd
 if errorlevel 1 exit 1
 
-:: TODO: Python tests
+:: RZ
+warpx.RZ.NOMPI.OMP.DP.OPMD.PSATD.QED.exe %TEST_DIR%\inputs_rz max_step=50 diag1.intervals=10 diag1.format=openpmd
+if errorlevel 1 exit 1
+
+:: Python: 3D
+%PYTHON% %TEST_DIR%\PICMI_inputs_3d.py
+if errorlevel 1 exit 1
+
+:: Python: 2D
+%PYTHON% %TEST_DIR%\PICMI_inputs_2d.py
+if errorlevel 1 exit 1
+
+:: Python: 1D
+%PYTHON% %TEST_DIR%\PICMI_inputs_1d.py
+if errorlevel 1 exit 1
+
+:: Python: RZ
+%PYTHON% %TEST_DIR%\PICMI_inputs_rz.py
+if errorlevel 1 exit 1

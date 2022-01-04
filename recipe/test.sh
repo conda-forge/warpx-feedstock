@@ -11,10 +11,20 @@ warpx.3d.NOMPI.OMP.DP.OPMD.PSATD.QED ${TEST_DIR}/inputs_3d max_step=50 diag1.int
 # 2D
 warpx.2d.NOMPI.OMP.DP.OPMD.PSATD.QED ${TEST_DIR}/inputs_2d max_step=50 diag1.intervals=10 diag1.format=openpmd
 
-# 1D: input in 22.01+
-#warpx.1d.NOMPI.OMP.DP.OPMD.PSATD.QED ${TEST_DIR}/inputs_1d max_step=50 diag1.intervals=10 diag1.format=openpmd
+# 1D
+warpx.1d.NOMPI.OMP.DP.OPMD.PSATD.QED ${TEST_DIR}/inputs_1d max_step=50 diag1.intervals=10 diag1.format=openpmd
 
 # RZ
-warpx.RZ.NOMPI.OMP.DP.OPMD.PSATD.QED ${TEST_DIR}/inputs_2d_rz max_step=50 diag1.intervals=10 diag1.format=openpmd
+warpx.RZ.NOMPI.OMP.DP.OPMD.PSATD.QED ${TEST_DIR}/inputs_rz max_step=50 diag1.intervals=10 diag1.format=openpmd
 
-# TODO: Python tests
+# Python: 3D
+$PYTHON ${TEST_DIR}/PICMI_inputs_3d.py
+
+# Python: 2D
+$PYTHON ${TEST_DIR}/PICMI_inputs_2d.py
+
+# Python: 1D
+$PYTHON ${TEST_DIR}/PICMI_inputs_1d.py
+
+# Python: RZ
+$PYTHON ${TEST_DIR}/PICMI_inputs_rz.py
