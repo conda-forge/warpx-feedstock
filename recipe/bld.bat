@@ -28,16 +28,16 @@ for %%d in (1 2 3 RZ) do (
     cmake --build build --config RelWithDebInfo --parallel 2
     if errorlevel 1 exit 1
 
-    for /r "build\bin" %%f in (*.exe) do (
+    for /r "build\bin" %%f in (warpx*.exe) do (
         echo %%~nf
         dir
         copy build\bin\%%~nf.exe %LIBRARY_PREFIX%\bin\
         if errorlevel 1 exit 1
     )
-    for /r "build\lib" %%f in (*.dll) do (
+    for /r "build\lib" %%f in (libwarpx*.dll) do (
         echo %%~nf
         dir
-        copy build\lib\%%~nf.dll %LIBRARY_PREFIX%\lib\
+        copy build\lib\%%~nf.dll %LIBRARY_PREFIX%\bin\
         if errorlevel 1 exit 1
     )
     
@@ -48,5 +48,5 @@ for %%d in (1 2 3 RZ) do (
 ::  if errorlevel 1 exit 1
 
 :: add Python API (PICMI interface)
-set "PYWARPX_LIB_DIR=%LIBRARY_PREFIX%\lib"
+set "PYWARPX_LIB_DIR=%LIBRARY_PREFIX%\bin"
 %PYTHON% -m pip install . -vv --no-build-isolation
