@@ -1,17 +1,9 @@
 #!/usr/bin/env bash
 
-# find out toolchain C++ standard
-CXX_STANDARD=14
+# avoid side-injection of -std=c++14 flag in some toolchains
 if [[ ${CXXFLAGS} == *"-std=c++14"* ]]; then
-    echo "14"
-    CXX_STANDARD=14
-elif [[ ${CXXFLAGS} == *"-std=c++17"* ]]; then
-    echo "17"
-    CXX_STANDARD=17
-elif [[ ${CXXFLAGS} == *"-std="* ]]; then
-    echo "ERROR: unknown C++ standard in toolchain!"
-    echo ${CXXFLAGS}
-    exit 1
+    echo "14 -> 17"
+    export CXXFLAGS="${CXXFLAGS} -std=c++17"
 fi
 
 # IPO/LTO does only work with certain toolchains
@@ -23,10 +15,9 @@ fi
 for dim in "1" "2" "3" "RZ"
 do
     cmake \
-        -S . -B build                         \
+        -S ${SRC_DIR} -B build                \
         -DCMAKE_BUILD_TYPE=RelWithDebInfo     \
         -DCMAKE_VERBOSE_MAKEFILE=ON           \
-        -DCMAKE_CXX_STANDARD=${CXX_STANDARD}  \
         -DCMAKE_INSTALL_LIBDIR=lib            \
         -DCMAKE_INSTALL_PREFIX=${PREFIX}      \
         -DWarpX_openpmd_internal=OFF          \
@@ -37,8 +28,7 @@ do
         -DWarpX_OPENPMD=ON  \
         -DWarpX_PSATD=ON    \
         -DWarpX_QED=ON      \
-        -DWarpX_DIMS=${dim} \
-        ${SRC_DIR}
+        -DWarpX_DIMS=${dim}
 
     cmake --build build --parallel ${CPU_COUNT}
 

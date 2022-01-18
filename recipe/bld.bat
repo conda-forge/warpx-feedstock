@@ -7,7 +7,7 @@ if errorlevel 1 exit 1
 
 for %%d in (1 2 3 RZ) do (
     cmake ^
-        -S . -B build                         ^
+        -S %SRC_DIR% -B build                 ^
         -G "Ninja"                            ^
         -DCMAKE_BUILD_TYPE=RelWithDebInfo     ^
         -DCMAKE_C_COMPILER=clang-cl           ^
@@ -22,8 +22,7 @@ for %%d in (1 2 3 RZ) do (
         -DWarpX_openpmd_internal=OFF ^
         -DWarpX_PSATD=ON    ^
         -DWarpX_QED=ON      ^
-        -DWarpX_DIMS=%%d    ^
-        %SRC_DIR%
+        -DWarpX_DIMS=%%d
     if errorlevel 1 exit 1
 
     cmake --build build --config RelWithDebInfo --parallel 2
