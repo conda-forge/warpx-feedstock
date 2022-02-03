@@ -19,6 +19,8 @@ if errorlevel 1 exit 1
 warpx.RZ.NOMPI.OMP.DP.OPMD.PSATD.QED.exe %TEST_DIR%\inputs_rz max_step=50 diag1.intervals=10 diag1.format=openpmd
 if errorlevel 1 exit 1
 
+dumpbin /imports %PREFIX%\Library\bin\libwarpx*.dll | find /i ".dll"
+
 :: Python: 3D
 %PYTHON% %TEST_DIR%\PICMI_inputs_3d.py
 if errorlevel 1 exit 1
