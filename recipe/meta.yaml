@@ -10,10 +10,6 @@ package:
 source:
   url: https://github.com/ECP-WarpX/WarpX/archive/{{ version }}.tar.gz
   sha256: {{ sha256 }}
-  patches:
-    # Fix UB when passing inputs to AMReX
-    # https://github.com/ECP-WarpX/WarpX/pull/2726
-    - 2726.patch
 
 build:
   number: {{ build }}
@@ -57,7 +53,7 @@ requirements:
   run:
     - numpy
     - periodictable
-    - picmistandard ==0.0.18
+    - picmistandard ==0.0.19
     - python
     - scipy
 
