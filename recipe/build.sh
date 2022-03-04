@@ -5,6 +5,11 @@ if [[ ${CXXFLAGS} == *"-std=c++14"* ]]; then
     echo "14 -> 17"
     export CXXFLAGS="${CXXFLAGS} -std=c++17"
 fi
+# Darwin modern C++
+#   https://conda-forge.org/docs/maintainer/knowledge_base.html#newer-c-features-with-old-sdk
+if [[ ${target_platform} =~ osx.* ]]; then
+    export CXXFLAGS="${CXXFLAGS} -D_LIBCPP_DISABLE_AVAILABILITY"
+fi
 
 # IPO/LTO does only work with certain toolchains
 WarpX_IPO=ON
