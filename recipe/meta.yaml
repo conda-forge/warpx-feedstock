@@ -30,7 +30,7 @@ requirements:
     - libxml2       # [win]
     - make          # [unix]
     - ninja         # [win]
-    - cmake >=3.15.0
+    - cmake >=3.18.0
     - libgomp       # [linux]
     - llvm-openmp   # [osx or win]
   host:
