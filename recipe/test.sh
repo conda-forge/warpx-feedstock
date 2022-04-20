@@ -15,7 +15,7 @@ warpx.2d.NOMPI.OMP.DP.OPMD.PSATD.QED ${TEST_DIR}/inputs_2d max_step=50 diag1.int
 warpx.1d.NOMPI.OMP.DP.OPMD.PSATD.QED ${TEST_DIR}/inputs_1d max_step=50 diag1.intervals=10 diag1.format=openpmd
 
 # RZ
-warpx.RZ.NOMPI.OMP.DP.OPMD.PSATD.QED ${TEST_DIR}/inputs_rz max_step=50 diag1.intervals=10 diag1.format=openpmd
+warpx.RZ.NOMPI.OMP.DP.OPMD.PSATD.QED ${TEST_DIR}/inputs_rz max_step=50 diag1.intervals=10 diag1.format=openpmd diag1.fields_to_plot=Er Et Ez Br Bt Bz jr jt jz rho
 
 # Python: 3D
 $PYTHON ${TEST_DIR}/PICMI_inputs_3d.py
