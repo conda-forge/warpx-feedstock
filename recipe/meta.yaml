@@ -1,7 +1,7 @@
 {% set name = "warpx" %}
-{% set version = "22.04" %}
+{% set version = "22.05" %}
 {% set build = 0 %}
-{% set sha256 = "9234d12e28b323cb250d3d2cefee0b36246bd8a1d1eb48e386f41977251c028f" %}
+{% set sha256 = "2fa69e6a4db36459b67bf663e8fbf56191f6c8c25dc76301dbd02a36f9b50479" %}
 
 package:
   name: {{ name|lower }}
@@ -10,6 +10,10 @@ package:
 source:
   url: https://github.com/ECP-WarpX/WarpX/archive/{{ version }}.tar.gz
   sha256: {{ sha256 }}
+  patches:
+    # Fix no-MPI builds (FieldProbe & AMReX Gather)
+    # https://github.com/ECP-WarpX/WarpX/pull/3134
+    - 3134.patch
 
 build:
   number: {{ build }}
