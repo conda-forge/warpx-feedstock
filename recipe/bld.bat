@@ -5,6 +5,12 @@
 if not exist %LIBRARY_PREFIX%\bin md %LIBRARY_PREFIX%\bin
 if errorlevel 1 exit 1
 
+:: <=22.07 work-around for
+:: https://github.com/AMReX-Codes/amrex/pull/2807
+echo "CXXFLAGS: %CXXFLAGS%"
+set "CXXFLAGS=%CXXFLAGS% /D_USE_MATH_DEFINES"
+echo "CXXFLAGS: %CXXFLAGS%"
+
 for %%d in (1 2 3 RZ) do (
     cmake ^
         -S %SRC_DIR% -B build                 ^
