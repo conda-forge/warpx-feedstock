@@ -1,7 +1,7 @@
 {% set name = "warpx" %}
-{% set version = "22.05" %}
+{% set version = "22.06" %}
 {% set build = 0 %}
-{% set sha256 = "2fa69e6a4db36459b67bf663e8fbf56191f6c8c25dc76301dbd02a36f9b50479" %}
+{% set sha256 = "e78398e215d3fc6bc5984f5d1c2ddeac290dcbc8a8e9d196e828ef6299187db9" %}
 
 package:
   name: {{ name|lower }}
@@ -10,10 +10,6 @@ package:
 source:
   url: https://github.com/ECP-WarpX/WarpX/archive/{{ version }}.tar.gz
   sha256: {{ sha256 }}
-  patches:
-    # Fix no-MPI builds (FieldProbe & AMReX Gather)
-    # https://github.com/ECP-WarpX/WarpX/pull/3134
-    - 3134.patch
 
 build:
   number: {{ build }}
@@ -71,14 +67,14 @@ test:
   imports:
     - pywarpx
   commands:
-    - test -f ${PREFIX}/bin/warpx.1d.NOMPI.OMP.DP.OPMD.PSATD.QED  # [unix]
-    - test -f ${PREFIX}/bin/warpx.2d.NOMPI.OMP.DP.OPMD.PSATD.QED  # [unix]
-    - test -f ${PREFIX}/bin/warpx.3d.NOMPI.OMP.DP.OPMD.PSATD.QED  # [unix]
-    - test -f ${PREFIX}/bin/warpx.RZ.NOMPI.OMP.DP.OPMD.PSATD.QED  # [unix]
-    - if not exist %LIBRARY_PREFIX%\bin\warpx.1d.NOMPI.OMP.DP.OPMD.PSATD.QED.exe exit 1  # [win]
-    - if not exist %LIBRARY_PREFIX%\bin\warpx.2d.NOMPI.OMP.DP.OPMD.PSATD.QED.exe exit 1  # [win]
-    - if not exist %LIBRARY_PREFIX%\bin\warpx.3d.NOMPI.OMP.DP.OPMD.PSATD.QED.exe exit 1  # [win]
-    - if not exist %LIBRARY_PREFIX%\bin\warpx.RZ.NOMPI.OMP.DP.OPMD.PSATD.QED.exe exit 1  # [win]
+    - test -f ${PREFIX}/bin/warpx.1d.NOMPI.OMP.DP.PDP.OPMD.PSATD.QED  # [unix]
+    - test -f ${PREFIX}/bin/warpx.2d.NOMPI.OMP.DP.PDP.OPMD.PSATD.QED  # [unix]
+    - test -f ${PREFIX}/bin/warpx.3d.NOMPI.OMP.DP.PDP.OPMD.PSATD.QED  # [unix]
+    - test -f ${PREFIX}/bin/warpx.RZ.NOMPI.OMP.DP.PDP.OPMD.PSATD.QED  # [unix]
+    - if not exist %LIBRARY_PREFIX%\bin\warpx.1d.NOMPI.OMP.DP.PDP.OPMD.PSATD.QED.exe exit 1  # [win]
+    - if not exist %LIBRARY_PREFIX%\bin\warpx.2d.NOMPI.OMP.DP.PDP.OPMD.PSATD.QED.exe exit 1  # [win]
+    - if not exist %LIBRARY_PREFIX%\bin\warpx.3d.NOMPI.OMP.DP.PDP.OPMD.PSATD.QED.exe exit 1  # [win]
+    - if not exist %LIBRARY_PREFIX%\bin\warpx.RZ.NOMPI.OMP.DP.PDP.OPMD.PSATD.QED.exe exit 1  # [win]
     # smoke tests: execute
     - ./test.sh      # [unix and build_platform == target_platform]
     - call test.bat  # [win]
