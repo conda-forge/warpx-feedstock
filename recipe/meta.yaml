@@ -1,7 +1,7 @@
 {% set name = "warpx" %}
-{% set version = "22.06" %}
+{% set version = "22.07" %}
 {% set build = 0 %}
-{% set sha256 = "e78398e215d3fc6bc5984f5d1c2ddeac290dcbc8a8e9d196e828ef6299187db9" %}
+{% set sha256 = "0286adc788136cb78033cb1678d38d36e42265bcfd3d0c361a9bcc2cfcdf241b" %}
 
 package:
   name: {{ name|lower }}
