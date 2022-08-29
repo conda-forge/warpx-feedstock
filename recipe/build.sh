@@ -21,6 +21,7 @@ for dim in "1" "2" "3" "RZ"
 do
     cmake \
         -S ${SRC_DIR} -B build                \
+        ${CMAKE_ARGS}                         \
         -DCMAKE_BUILD_TYPE=RelWithDebInfo     \
         -DCMAKE_VERBOSE_MAKEFILE=ON           \
         -DCMAKE_INSTALL_LIBDIR=lib            \
