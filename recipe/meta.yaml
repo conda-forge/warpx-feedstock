@@ -30,6 +30,7 @@ requirements:
     - libxml2       # [win]
     - make          # [unix]
     - ninja         # [win]
+    - pkg-config
     - cmake >=3.18.0
     - libgomp       # [linux]
     - llvm-openmp   # [osx or win]
@@ -43,7 +44,6 @@ requirements:
     - setuptools
     - wheel
     - fftw
-    - pkg-config
 # ninja: error: 'D:/bld/warpx_1615224319242/_h_env/Library/lib/lapack.lib', needed by 'lib/warpx.RZ.NOMPI.OMP.DP.OPMD.PSATD.QED.dll', missing and no known rule to make it
     - liblapack   # [win]
     - liblapacke  # [win]
