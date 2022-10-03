@@ -53,7 +53,7 @@ requirements:
   run:
     - numpy
     - periodictable
-    - picmistandard ==0.0.19
+    - picmistandard ==0.0.20
     - python
     - scipy
 
