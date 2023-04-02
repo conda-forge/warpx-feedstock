@@ -1,11 +1,11 @@
-About warpx
-===========
+About warpx-feedstock
+=====================
+
+Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/warpx-feedstock/blob/main/LICENSE.txt)
 
 Home: https://ecp-warpx.github.io
 
 Package license: BSD-3-Clause-LBNL
-
-Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/warpx-feedstock/blob/main/LICENSE.txt)
 
 Summary: WarpX is an advanced electromagnetic Particle-In-Cell code.
 
