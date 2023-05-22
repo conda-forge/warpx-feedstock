@@ -10,7 +10,7 @@ for %%d in (1 2 3 RZ) do (
         -S %SRC_DIR% -B build                 ^
         %CMAKE_ARGS%                          ^
         -G "Ninja"                            ^
-        -DCMAKE_BUILD_TYPE=RelWithDebInfo     ^
+        -DCMAKE_BUILD_TYPE=Release            ^
         -DCMAKE_C_COMPILER=clang-cl           ^
         -DCMAKE_CXX_COMPILER=clang-cl         ^
         -DCMAKE_LINKER=lld-link               ^
@@ -26,7 +26,7 @@ for %%d in (1 2 3 RZ) do (
         -DWarpX_DIMS=%%d
     if errorlevel 1 exit 1
 
-    cmake --build build --config RelWithDebInfo --parallel 2
+    cmake --build build --config Release --parallel 2
     if errorlevel 1 exit 1
 
     for /r "build\bin" %%f in (*.exe) do (
@@ -45,7 +45,7 @@ for %%d in (1 2 3 RZ) do (
     rmdir /s /q build
 )
 :: future (if skipping AMReX headers) - inside above loop
-::  cmake --build build --config RelWithDebInfo --target install
+::  cmake --build build --config Release --target install
 ::  if errorlevel 1 exit 1
 
 :: add Python API (PICMI interface)
