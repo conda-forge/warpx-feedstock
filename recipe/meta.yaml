@@ -31,7 +31,7 @@ requirements:
     - make          # [unix]
     - ninja         # [win]
     - pkg-config
-    - cmake >=3.18.0
+    - cmake
     - libgomp       # [linux]
     - llvm-openmp   # [osx or win]
   host:
@@ -53,7 +53,7 @@ requirements:
   run:
     - numpy
     - periodictable
-    - picmistandard ==0.0.22
+    - picmistandard ==0.25.0
     - python
     - scipy
 
