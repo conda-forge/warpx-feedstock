@@ -1,7 +1,7 @@
 {% set name = "warpx" %}
-{% set version = "23.05" %}
+{% set version = "23.07" %}
 {% set build = 0 %}
-{% set sha256 = "34306a98fdb1f5f44ab4fb92f35966bfccdcf1680a722aa773af2b59a3060d73" %}
+{% set sha256 = "511633f94c0d0205013609bde5bbf92a29c2e69f6e69b461b80d09dc25602945" %}
 
 package:
   name: {{ name|lower }}
@@ -31,7 +31,7 @@ requirements:
     - make          # [unix]
     - ninja         # [win]
     - pkg-config
-    - cmake >=3.18.0
+    - cmake
     - libgomp       # [linux]
     - llvm-openmp   # [osx or win]
   host:
@@ -44,16 +44,16 @@ requirements:
     - setuptools
     - wheel
     - fftw
-# ninja: error: 'D:/bld/warpx_1615224319242/_h_env/Library/lib/lapack.lib', needed by 'lib/warpx.RZ.NOMPI.OMP.DP.OPMD.PSATD.QED.dll', missing and no known rule to make it
+# ninja: error: 'D:/bld/warpx_1615224319242/_h_env/Library/lib/lapack.lib', needed by 'lib/warpx.rz.NOMPI.OMP.DP.OPMD.PSATD.QED.dll', missing and no known rule to make it
     - liblapack   # [win]
     - liblapacke  # [win]
-# ninja: error: 'D:/bld/warpx_1635938394765/_h_env/Library/lib/blas.lib', needed by 'lib/warpx.RZ.NOMPI.OMP.DP.OPMD.PSATD.QED.dll', missing and no known rule to make it
+# ninja: error: 'D:/bld/warpx_1635938394765/_h_env/Library/lib/blas.lib', needed by 'lib/warpx.rz.NOMPI.OMP.DP.OPMD.PSATD.QED.dll', missing and no known rule to make it
     - libblas   # [win]
     - libcblas  # [win]
   run:
     - numpy
     - periodictable
-    - picmistandard ==0.0.22
+    - picmistandard ==0.25.0
     - python
     - scipy
 
@@ -70,11 +70,11 @@ test:
     - test -f ${PREFIX}/bin/warpx.1d.NOMPI.OMP.DP.PDP.OPMD.PSATD.QED  # [unix]
     - test -f ${PREFIX}/bin/warpx.2d.NOMPI.OMP.DP.PDP.OPMD.PSATD.QED  # [unix]
     - test -f ${PREFIX}/bin/warpx.3d.NOMPI.OMP.DP.PDP.OPMD.PSATD.QED  # [unix]
-    - test -f ${PREFIX}/bin/warpx.RZ.NOMPI.OMP.DP.PDP.OPMD.PSATD.QED  # [unix]
+    - test -f ${PREFIX}/bin/warpx.rz.NOMPI.OMP.DP.PDP.OPMD.PSATD.QED  # [unix]
     - if not exist %LIBRARY_PREFIX%\bin\warpx.1d.NOMPI.OMP.DP.PDP.OPMD.PSATD.QED.exe exit 1  # [win]
     - if not exist %LIBRARY_PREFIX%\bin\warpx.2d.NOMPI.OMP.DP.PDP.OPMD.PSATD.QED.exe exit 1  # [win]
     - if not exist %LIBRARY_PREFIX%\bin\warpx.3d.NOMPI.OMP.DP.PDP.OPMD.PSATD.QED.exe exit 1  # [win]
-    - if not exist %LIBRARY_PREFIX%\bin\warpx.RZ.NOMPI.OMP.DP.PDP.OPMD.PSATD.QED.exe exit 1  # [win]
+    - if not exist %LIBRARY_PREFIX%\bin\warpx.rz.NOMPI.OMP.DP.PDP.OPMD.PSATD.QED.exe exit 1  # [win]
     # smoke tests: execute
     - ./test.sh      # [unix and build_platform == target_platform]
     - call test.bat  # [win]

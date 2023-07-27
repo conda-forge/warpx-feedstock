@@ -17,33 +17,30 @@ if [[ ${target_platform} =~ osx.* ]]; then
     WarpX_IPO=OFF
 fi
 
-for dim in "1" "2" "3" "RZ"
-do
-    cmake \
-        -S ${SRC_DIR} -B build                \
-        ${CMAKE_ARGS}                         \
-        -DCMAKE_BUILD_TYPE=Release            \
-        -DCMAKE_VERBOSE_MAKEFILE=ON           \
-        -DCMAKE_INSTALL_LIBDIR=lib            \
-        -DCMAKE_INSTALL_PREFIX=${PREFIX}      \
-        -DWarpX_openpmd_internal=OFF          \
-        -DWarpX_IPO=${WarpX_IPO}              \
-        -DWarpX_ASCENT=OFF  \
-        -DWarpX_LIB=ON      \
-        -DWarpX_MPI=OFF     \
-        -DWarpX_OPENPMD=ON  \
-        -DWarpX_PSATD=ON    \
-        -DWarpX_QED=ON      \
-        -DWarpX_DIMS=${dim}
+cmake \
+    -S ${SRC_DIR} -B build                \
+    ${CMAKE_ARGS}                         \
+    -DCMAKE_BUILD_TYPE=Release            \
+    -DCMAKE_VERBOSE_MAKEFILE=ON           \
+    -DCMAKE_INSTALL_LIBDIR=lib            \
+    -DCMAKE_INSTALL_PREFIX=${PREFIX}      \
+    -DWarpX_openpmd_internal=OFF          \
+    -DWarpX_IPO=${WarpX_IPO}              \
+    -DWarpX_ASCENT=OFF  \
+    -DWarpX_LIB=ON      \
+    -DWarpX_MPI=OFF     \
+    -DWarpX_OPENPMD=ON  \
+    -DWarpX_PSATD=ON    \
+    -DWarpX_QED=ON      \
+    -DWarpX_DIMS="1;2;RZ;3"
 
-    cmake --build build --parallel ${CPU_COUNT}
+cmake --build build --parallel ${CPU_COUNT}
 
-    # future:
-    #CTEST_OUTPUT_ON_FAILURE=1 make ${VERBOSE_CM} test
+# future:
+#CTEST_OUTPUT_ON_FAILURE=1 make ${VERBOSE_CM} test
 
-    # future (if skipping AMReX headers)
-    #cmake --build build --target install
-done
+# future (if skipping AMReX headers)
+#cmake --build build --target install
 
 # simple install
 #   copy all binaries and libwarpx* files

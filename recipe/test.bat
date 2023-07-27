@@ -16,7 +16,7 @@ warpx.1d.NOMPI.OMP.DP.PDP.OPMD.PSATD.QED.exe %TEST_DIR%\inputs_1d max_step=50 di
 if errorlevel 1 exit 1
 
 :: RZ
-warpx.RZ.NOMPI.OMP.DP.PDP.OPMD.PSATD.QED.exe %TEST_DIR%\inputs_rz max_step=50 diag1.intervals=10 diag1.format=openpmd diag1.fields_to_plot=Er Et Ez Br Bt Bz jr jt jz rho
+warpx.rz.NOMPI.OMP.DP.PDP.OPMD.PSATD.QED.exe %TEST_DIR%\inputs_rz max_step=50 diag1.intervals=10 diag1.format=openpmd diag1.fields_to_plot=Er Et Ez Br Bt Bz jr jt jz rho
 if errorlevel 1 exit 1
 
 :: Python: 3D
