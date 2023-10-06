@@ -15,8 +15,13 @@ cmake ^
     -DCMAKE_LINKER=lld-link               ^
     -DCMAKE_NM=llvm-nm                    ^
     -DCMAKE_VERBOSE_MAKEFILE=ON           ^
+    -DPYINSTALLOPTIONS="--no-deps"        ^
+    -DPython_EXECUTABLE=%PYTHON%          ^
+    -DpyAMReX_pybind11_internal=OFF       ^
+    -DWarpX_amrex_repo=https://github.com/ax3l/amrex.git ^
+    -DWarpX_amrex_branch=fix-realvect-static-export ^
     -DWarpX_ASCENT=OFF  ^
-    -DWarpX_LIB=ON      ^
+    -DWarpX_PYTHON=ON   ^
     -DWarpX_MPI=OFF     ^
     -DWarpX_OPENPMD=ON  ^
     -DWarpX_openpmd_internal=OFF ^
@@ -47,5 +52,4 @@ rmdir /s /q build
 ::  if errorlevel 1 exit 1
 
 :: add Python API (PICMI interface)
-set "PYWARPX_LIB_DIR=%LIBRARY_PREFIX%\lib"
-%PYTHON% -m pip install . -vv --no-build-isolation
+cmake --build build --target pip_install

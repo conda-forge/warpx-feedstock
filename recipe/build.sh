@@ -24,10 +24,14 @@ cmake \
     -DCMAKE_VERBOSE_MAKEFILE=ON           \
     -DCMAKE_INSTALL_LIBDIR=lib            \
     -DCMAKE_INSTALL_PREFIX=${PREFIX}      \
+    -DPYINSTALLOPTIONS="--no-deps"        \
+    -DPython_EXECUTABLE=${PYTHON}         \
+    -DPython_INCLUDE_DIR=$(${PYTHON} -c "from sysconfig import get_paths as gp; print(gp()['include'])") \
+    -DpyAMReX_pybind11_internal=OFF       \
     -DWarpX_openpmd_internal=OFF          \
     -DWarpX_IPO=${WarpX_IPO}              \
     -DWarpX_ASCENT=OFF  \
-    -DWarpX_LIB=ON      \
+    -DWarpX_PYTHON=ON   \
     -DWarpX_MPI=OFF     \
     -DWarpX_OPENPMD=ON  \
     -DWarpX_PSATD=ON    \
@@ -49,5 +53,4 @@ cp build/bin/warpx.* ${PREFIX}/bin/
 cp build/lib/libwarpx.* ${PREFIX}/lib/
 
 # add Python API (PICMI interface)
-export PYWARPX_LIB_DIR=$PREFIX/lib
-$PYTHON -m pip install . -vv --no-build-isolation
+cmake --build build --target pip_install
