@@ -24,7 +24,7 @@ cmake \
     -DCMAKE_VERBOSE_MAKEFILE=ON           \
     -DCMAKE_INSTALL_LIBDIR=lib            \
     -DCMAKE_INSTALL_PREFIX=${PREFIX}      \
-    -DPYINSTALLOPTIONS="--no-deps"        \
+    -DPYINSTALLOPTIONS="--no-build-isolation"  \
     -DPython_EXECUTABLE=${PYTHON}         \
     -DPython_INCLUDE_DIR=$(${PYTHON} -c "from sysconfig import get_paths as gp; print(gp()['include'])") \
     -DpyAMReX_pybind11_internal=OFF       \
