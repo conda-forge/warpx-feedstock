@@ -52,4 +52,4 @@ rmdir /s /q build
 ::  if errorlevel 1 exit 1
 
 :: add Python API (PICMI interface)
-cmake --build build --target pip_install
+cmake --build build --target pip_install_nodeps

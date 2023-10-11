@@ -1,0 +1,33 @@
+From bbf61b869a60e82b64447a47f0ee22eba9220fcd Mon Sep 17 00:00:00 2001
+From: Axel Huebl <axel.huebl@plasma.ninja>
+Date: Tue, 10 Oct 2023 18:38:04 -0700
+Subject: [PATCH] CMake: `pip_install_nodeps` Target
+
+Add a target that does not search of check any dependencies with pip.
+Useful in package managers.
+---
+ CMakeLists.txt | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 5d00093e89..564a629786 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -686,6 +686,17 @@ if(WarpX_PYTHON)
+             ${WarpX_CUSTOM_TARGET_PREFIX}pip_install_requirements
+             ${_EXTRA_INSTALL_DEPENDS}
+     )
++
++    # this is for package managers only
++    add_custom_target(${WarpX_CUSTOM_TARGET_PREFIX}pip_install_nodeps
++        ${CMAKE_COMMAND} -E env WARPX_MPI=${WarpX_MPI}
++            python3 -m pip install --force-reinstall --no-index --no-deps ${PYINSTALLOPTIONS} --find-links=warpx-whl pywarpx
++        WORKING_DIRECTORY
++            ${WarpX_BINARY_DIR}
++        DEPENDS
++            pyWarpX_${WarpX_DIMS_LAST}
++            ${WarpX_CUSTOM_TARGET_PREFIX}pip_wheel
++    )
+ endif()
+ 
+ 

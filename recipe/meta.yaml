@@ -10,6 +10,9 @@ package:
 source:
   url: https://github.com/ECP-WarpX/WarpX/archive/{{ version }}.tar.gz
   sha256: {{ sha256 }}
+  patches:
+    # Add pip_install_nodeps
+    - 4361.patch
 
 build:
   number: {{ build }}
