@@ -43,8 +43,8 @@ cmake --build build --parallel ${CPU_COUNT}
 # future:
 #CTEST_OUTPUT_ON_FAILURE=1 make ${VERBOSE_CM} test
 
-# future (if skipping AMReX headers)
-#cmake --build build --target install
+# install (libs)
+cmake --build build --target install
 
 # simple install
 #   copy all binaries and libwarpx* files

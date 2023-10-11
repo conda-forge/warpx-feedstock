@@ -33,6 +33,10 @@ if errorlevel 1 exit 1
 cmake --build build --config Release --parallel 2
 if errorlevel 1 exit 1
 
+:: install (libs)
+cmake --build build --config Release --target install
+if errorlevel 1 exit 1
+
 for /r "build\bin" %%f in (*.exe) do (
     echo %%~nf
     dir
