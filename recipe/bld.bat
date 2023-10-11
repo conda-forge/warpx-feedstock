@@ -18,8 +18,10 @@ cmake ^
     -DPYINSTALLOPTIONS="--no-build-isolation"  ^
     -DPython_EXECUTABLE=%PYTHON%          ^
     -DpyAMReX_pybind11_internal=OFF       ^
-    -DWarpX_amrex_repo=https://github.com/ax3l/amrex.git ^
-    -DWarpX_amrex_branch=fix-realvect-static-export ^
+    -DWarpX_amrex_repo=https://github.com/ax3l/amrex.git  ^
+    -DWarpX_amrex_branch=fix-realvect-static-export  ^
+    -DWarpX_pyamrex_repo=https://github.com/ax3l/pyamrex.git  ^
+    -DWarpX_pyamrex_branch=topic-pip-nodeps  ^
     -DWarpX_ASCENT=OFF  ^
     -DWarpX_PYTHON=ON   ^
     -DWarpX_MPI=OFF     ^
@@ -56,4 +58,5 @@ rmdir /s /q build
 ::  if errorlevel 1 exit 1
 
 :: add Python API (PICMI interface)
-cmake --build build --target pip_install_nodeps
+cmake --build build --config Release --target pyamrex_pip_install_nodeps
+cmake --build build --config Release --target pip_install_nodeps
