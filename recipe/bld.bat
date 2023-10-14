@@ -52,14 +52,12 @@ for /r "build\lib" %%f in (*.dll) do (
     if errorlevel 1 exit 1
 )
 
-rmdir /s /q build
-:: future (if skipping AMReX headers) - inside above loop
-::  cmake --build build --config Release --target install
-::  if errorlevel 1 exit 1
-
 :: add Python API (PICMI interface)
 cmake --build build --config Release --target pyamrex_pip_install_nodeps
 if errorlevel 1 exit 1
 
 cmake --build build --config Release --target pip_install_nodeps
 if errorlevel 1 exit 1
+
+:: cleanup
+rmdir /s /q build
