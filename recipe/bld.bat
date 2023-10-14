@@ -59,4 +59,7 @@ rmdir /s /q build
 
 :: add Python API (PICMI interface)
 cmake --build build --config Release --target pyamrex_pip_install_nodeps
+if errorlevel 1 exit 1
+
 cmake --build build --config Release --target pip_install_nodeps
+if errorlevel 1 exit 1
