@@ -1,4 +1,4 @@
-From bbf61b869a60e82b64447a47f0ee22eba9220fcd Mon Sep 17 00:00:00 2001
+From bbcf62fb4cf994792da6ed286f8a23d5b64217ca Mon Sep 17 00:00:00 2001
 From: Axel Huebl <axel.huebl@plasma.ninja>
 Date: Tue, 10 Oct 2023 18:38:04 -0700
 Subject: [PATCH] CMake: `pip_install_nodeps` Target
@@ -10,7 +10,7 @@ Useful in package managers.
  1 file changed, 11 insertions(+)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 5d00093e89..564a629786 100644
+index 5d00093e89..55161728d0 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -686,6 +686,17 @@ if(WarpX_PYTHON)
@@ -21,7 +21,7 @@ index 5d00093e89..564a629786 100644
 +    # this is for package managers only
 +    add_custom_target(${WarpX_CUSTOM_TARGET_PREFIX}pip_install_nodeps
 +        ${CMAKE_COMMAND} -E env WARPX_MPI=${WarpX_MPI}
-+            python3 -m pip install --force-reinstall --no-index --no-deps ${PYINSTALLOPTIONS} --find-links=warpx-whl pywarpx
++            ${Python_EXECUTABLE} -m pip install --force-reinstall --no-index --no-deps ${PYINSTALLOPTIONS} --find-links=warpx-whl pywarpx
 +        WORKING_DIRECTORY
 +            ${WarpX_BINARY_DIR}
 +        DEPENDS
