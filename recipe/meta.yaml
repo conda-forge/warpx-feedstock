@@ -13,6 +13,8 @@ source:
   patches:
     # Add pip_install_nodeps
     - 4361.patch
+    # Fix hard-coded Python executable
+    - 4379.patch
 
 build:
   number: {{ build }}
