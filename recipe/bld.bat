@@ -45,6 +45,10 @@ if errorlevel 1 exit 1
 cmake --build build --config Release --target pip_install_nodeps
 if errorlevel 1 exit 1
 
+:: clean "symlink"
+del "%LIBRARY_PREFIX%\lib\amrex.dll"
+del "%LIBRARY_PREFIX%\bin\amrex.dll"
+
 :: test
 ::   skip the pyAMReX tests to save CI time
 ::set "EXCLUSION_REGEX=AMReX"
