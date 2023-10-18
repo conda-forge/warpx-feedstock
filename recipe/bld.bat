@@ -12,11 +12,19 @@ cmake ^
     -DCMAKE_BUILD_TYPE=Release            ^
     -DCMAKE_C_COMPILER=clang-cl           ^
     -DCMAKE_CXX_COMPILER=clang-cl         ^
+    -DCMAKE_INSTALL_LIBDIR=lib            ^
     -DCMAKE_LINKER=lld-link               ^
     -DCMAKE_NM=llvm-nm                    ^
     -DCMAKE_VERBOSE_MAKEFILE=ON           ^
+    -DPYINSTALLOPTIONS="--no-build-isolation"  ^
+    -DPython_EXECUTABLE=%PYTHON%          ^
+    -DpyAMReX_pybind11_internal=OFF       ^
+    -DWarpX_amrex_repo=https://github.com/ax3l/amrex.git  ^
+    -DWarpX_amrex_branch=fix-realvect-static-export  ^
+    -DWarpX_pyamrex_repo=https://github.com/ax3l/pyamrex.git  ^
+    -DWarpX_pyamrex_branch=topic-pip-nodeps  ^
     -DWarpX_ASCENT=OFF  ^
-    -DWarpX_LIB=ON      ^
+    -DWarpX_PYTHON=ON   ^
     -DWarpX_MPI=OFF     ^
     -DWarpX_OPENPMD=ON  ^
     -DWarpX_openpmd_internal=OFF ^
@@ -25,27 +33,24 @@ cmake ^
     -DWarpX_DIMS="1;2;RZ;3"
 if errorlevel 1 exit 1
 
+:: build
 cmake --build build --config Release --parallel 2
 if errorlevel 1 exit 1
 
-for /r "build\bin" %%f in (*.exe) do (
-    echo %%~nf
-    dir
-    copy build\bin\%%~nf.exe %LIBRARY_PREFIX%\bin\
-    if errorlevel 1 exit 1
-)
-for /r "build\lib" %%f in (*.dll) do (
-    echo %%~nf
-    dir
-    copy build\lib\%%~nf.dll %LIBRARY_PREFIX%\lib\
-    if errorlevel 1 exit 1
-)
+:: install
+cmake --build build --config Release --target install
+if errorlevel 1 exit 1
+cmake --build build --config Release --target pyamrex_pip_install_nodeps
+if errorlevel 1 exit 1
+cmake --build build --config Release --target pip_install_nodeps
+if errorlevel 1 exit 1
 
-rmdir /s /q build
-:: future (if skipping AMReX headers) - inside above loop
-::  cmake --build build --config Release --target install
-::  if errorlevel 1 exit 1
+:: clean "symlink"
+del "%LIBRARY_PREFIX%\lib\amrex.dll"
+del "%LIBRARY_PREFIX%\bin\amrex.dll"
 
-:: add Python API (PICMI interface)
-set "PYWARPX_LIB_DIR=%LIBRARY_PREFIX%\lib"
-%PYTHON% -m pip install . -vv --no-build-isolation
+:: test
+::   skip the pyAMReX tests to save CI time
+::set "EXCLUSION_REGEX=AMReX"
+::ctest --test-dir build --build-config Release --output-on-failure -E %EXCLUSION_REGEX%
+::if errorlevel 1 exit 1

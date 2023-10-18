@@ -1,7 +1,7 @@
 {% set name = "warpx" %}
-{% set version = "23.08" %}
-{% set build = 2 %}
-{% set sha256 = "67695ff04b83d1823ea621c19488e54ebaf268532b0e5eb4ea8ad293d7ab3ddc" %}
+{% set version = "23.10" %}
+{% set build = 0 %}
+{% set sha256 = "6f006336a66799b038362e07b00dd4ec9d0b9da67864cae84d725136842eb0ef" %}
 
 package:
   name: {{ name|lower }}
@@ -10,6 +10,11 @@ package:
 source:
   url: https://github.com/ECP-WarpX/WarpX/archive/{{ version }}.tar.gz
   sha256: {{ sha256 }}
+  patches:
+    # Add pip_install_nodeps
+    - 4361.patch
+    # Fix hard-coded Python executable
+    - 4379.patch
 
 build:
   number: {{ build }}
@@ -21,6 +26,7 @@ requirements:
   build:
     - python                                 # [build_platform != target_platform]
     - cross-python_{{ target_platform }}     # [build_platform != target_platform]
+    - pybind11                               # [build_platform != target_platform]
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
     - ccache        # [unix]
@@ -38,8 +44,11 @@ requirements:
     - blaspp
     - libboost-headers
     - lapackpp
+    - mpi4py     # [mpi != 'nompi']
+    - numpy
     - openpmd-api
     - pip
+    - pybind11
     - python
     - setuptools
     - wheel
@@ -51,9 +60,10 @@ requirements:
     - libblas   # [win]
     - libcblas  # [win]
   run:
-    - numpy
+    - mpi4py     # [mpi != 'nompi']
+    - {{ pin_compatible('numpy') }}
     - periodictable
-    - picmistandard ==0.25.0
+    - picmistandard ==0.26.0
     - python
     - scipy
 
