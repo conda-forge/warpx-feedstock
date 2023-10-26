@@ -27,17 +27,17 @@ cmake \
     -DPYINSTALLOPTIONS="--no-build-isolation"  \
     -DPython_EXECUTABLE=${PYTHON}         \
     -DPython_INCLUDE_DIR=$(${PYTHON} -c "from sysconfig import get_paths as gp; print(gp()['include'])") \
-    -DpyAMReX_pybind11_internal=OFF       \
-    -DWarpX_openpmd_internal=OFF          \
-    -DWarpX_pyamrex_repo=https://github.com/ax3l/pyamrex.git  \
-    -DWarpX_pyamrex_branch=topic-pip-nodeps  \
-    -DWarpX_IPO=${WarpX_IPO}              \
-    -DWarpX_ASCENT=OFF  \
-    -DWarpX_PYTHON=ON   \
-    -DWarpX_MPI=OFF     \
-    -DWarpX_OPENPMD=ON  \
-    -DWarpX_PSATD=ON    \
-    -DWarpX_QED=ON      \
+    -DWarpX_amrex_internal=OFF    \
+    -DWarpX_ASCENT=OFF            \
+    -DWarpX_IPO=${WarpX_IPO}      \
+    -DWarpX_MPI=OFF               \
+    -DWarpX_OPENPMD=ON            \
+    -DWarpX_openpmd_internal=OFF  \
+    -DWarpX_PSATD=ON              \
+    -DWarpX_pyamrex_internal=OFF  \
+    -DWarpX_pybind11_internal=OFF \
+    -DWarpX_PYTHON=ON             \
+    -DWarpX_QED=ON                \
     -DWarpX_DIMS="1;2;RZ;3"
 
 cmake --build build --parallel ${CPU_COUNT}
@@ -55,5 +55,4 @@ cp build/bin/warpx.* ${PREFIX}/bin/
 cp build/lib/libwarpx.* ${PREFIX}/lib/
 
 # add Python API (PICMI interface)
-cmake --build build --target pyamrex_pip_install_nodeps
 cmake --build build --target pip_install_nodeps

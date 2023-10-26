@@ -1,6 +1,6 @@
 {% set name = "warpx" %}
 {% set version = "23.10" %}
-{% set build = 0 %}
+{% set build = 1 %}
 {% set sha256 = "6f006336a66799b038362e07b00dd4ec9d0b9da67864cae84d725136842eb0ef" %}
 
 package:
@@ -29,11 +29,8 @@ requirements:
     - pybind11                               # [build_platform != target_platform]
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
-    - ccache        # [unix]
     - clang         # [win]
     - lld           # [win]
-    # TODO: add libxml2 dep in lld-feedstock
-    - libxml2       # [win]
     - make          # [unix]
     - ninja         # [win]
     - pkg-config
@@ -41,13 +38,14 @@ requirements:
     - libgomp       # [linux]
     - llvm-openmp   # [osx or win]
   host:
+    - amrex {{ version }}
     - blaspp
     - libboost-headers
     - lapackpp
-    - mpi4py     # [mpi != 'nompi']
     - numpy
     - openpmd-api
     - pip
+    - pyamrex {{ version }}
     - pybind11
     - python
     - setuptools
@@ -60,10 +58,10 @@ requirements:
     - libblas   # [win]
     - libcblas  # [win]
   run:
-    - mpi4py     # [mpi != 'nompi']
     - {{ pin_compatible('numpy') }}
     - periodictable
     - picmistandard ==0.26.0
+    - pyamrex {{ version }}
     - python
     - scipy
 
