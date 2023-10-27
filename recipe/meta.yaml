@@ -20,6 +20,7 @@ source:
 
 build:
   number: {{ build }}
+  skip: true  # [python_impl == 'pypy']
   run_exports:
     # releases are not (yet) compatible
     - warpx {{ version }}
