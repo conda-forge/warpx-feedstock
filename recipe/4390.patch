@@ -1,0 +1,117 @@
+From 783c6858c33639b0b606770873d0cdbca984e71c Mon Sep 17 00:00:00 2001
+From: Axel Huebl <axel.huebl@plasma.ninja>
+Date: Thu, 26 Oct 2023 03:14:24 -0700
+Subject: [PATCH] Fix External AMReX Builds
+
+- print version
+- make AMReX external if pyAMReX is external
+- new AMReX 23.11+ installed CMake module paths for CMake scripts
+- `TINYP` is not really required for external packages and thus
+  should not fail if configured not to be used
+---
+ .../ReducedDiags/FieldProbeParticleContainer.cpp   |  1 -
+ Source/Particles/LaserParticleContainer.cpp        |  1 -
+ Source/Particles/PhysicalParticleContainer.cpp     |  1 -
+ Source/Particles/WarpXParticleContainer.cpp        |  1 -
+ cmake/dependencies/AMReX.cmake                     | 14 +++++++++++++-
+ cmake/dependencies/pyAMReX.cmake                   |  2 +-
+ 6 files changed, 14 insertions(+), 6 deletions(-)
+
+diff --git a/Source/Diagnostics/ReducedDiags/FieldProbeParticleContainer.cpp b/Source/Diagnostics/ReducedDiags/FieldProbeParticleContainer.cpp
+index 5d990b9eb0..9a94375954 100644
+--- a/Source/Diagnostics/ReducedDiags/FieldProbeParticleContainer.cpp
++++ b/Source/Diagnostics/ReducedDiags/FieldProbeParticleContainer.cpp
+@@ -50,7 +50,6 @@
+ #include <AMReX_ParticleTile.H>
+ #include <AMReX_ParticleTransformation.H>
+ #include <AMReX_ParticleUtil.H>
+-#include <AMReX_TinyProfiler.H>
+ #include <AMReX_Utility.H>
+ 
+ 
+diff --git a/Source/Particles/LaserParticleContainer.cpp b/Source/Particles/LaserParticleContainer.cpp
+index 782e630e80..7d918d5dfb 100644
+--- a/Source/Particles/LaserParticleContainer.cpp
++++ b/Source/Particles/LaserParticleContainer.cpp
+@@ -46,7 +46,6 @@
+ #include <AMReX_REAL.H>
+ #include <AMReX_RealBox.H>
+ #include <AMReX_StructOfArrays.H>
+-#include <AMReX_TinyProfiler.H>
+ #include <AMReX_Utility.H>
+ #include <AMReX_Vector.H>
+ 
+diff --git a/Source/Particles/PhysicalParticleContainer.cpp b/Source/Particles/PhysicalParticleContainer.cpp
+index 632e3fca85..2afb9dbfb5 100644
+--- a/Source/Particles/PhysicalParticleContainer.cpp
++++ b/Source/Particles/PhysicalParticleContainer.cpp
+@@ -83,7 +83,6 @@
+ #include <AMReX_SPACE.H>
+ #include <AMReX_Scan.H>
+ #include <AMReX_StructOfArrays.H>
+-#include <AMReX_TinyProfiler.H>
+ #include <AMReX_Utility.H>
+ #include <AMReX_Vector.H>
+ #include <AMReX_Parser.H>
+diff --git a/Source/Particles/WarpXParticleContainer.cpp b/Source/Particles/WarpXParticleContainer.cpp
+index df3938ec90..6109cd830f 100644
+--- a/Source/Particles/WarpXParticleContainer.cpp
++++ b/Source/Particles/WarpXParticleContainer.cpp
+@@ -58,7 +58,6 @@
+ #include <AMReX_ParticleTransformation.H>
+ #include <AMReX_ParticleUtil.H>
+ #include <AMReX_Random.H>
+-#include <AMReX_TinyProfiler.H>
+ #include <AMReX_Utility.H>
+ 
+ 
+diff --git a/cmake/dependencies/AMReX.cmake b/cmake/dependencies/AMReX.cmake
+index fbdd39e4f4..99ef5c5e26 100644
+--- a/cmake/dependencies/AMReX.cmake
++++ b/cmake/dependencies/AMReX.cmake
+@@ -1,4 +1,10 @@
+ macro(find_amrex)
++    # if pyAMReX is external, AMReX must be as well
++    if(DEFINED WarpX_pyamrex_internal AND NOT WarpX_pyamrex_internal)
++        set(WarpX_amrex_internal OFF CACHE BOOL
++            "Download & build AMReX" FORCE)
++    endif()
++
+     if(WarpX_amrex_src)
+         message(STATUS "Compiling local AMReX ...")
+         message(STATUS "AMReX source path: ${WarpX_amrex_src}")
+@@ -10,6 +16,7 @@ macro(find_amrex)
+         message(STATUS "AMReX repository: ${WarpX_amrex_repo} (${WarpX_amrex_branch})")
+         include(FetchContent)
+     endif()
++
+     if(WarpX_amrex_internal OR WarpX_amrex_src)
+         set(CMAKE_POLICY_DEFAULT_CMP0077 NEW)
+ 
+@@ -243,7 +250,12 @@ macro(find_amrex)
+         endif()
+         set(COMPONENT_PRECISION ${WarpX_PRECISION} P${WarpX_PARTICLE_PRECISION})
+ 
+-        find_package(AMReX 23.10 CONFIG REQUIRED COMPONENTS ${COMPONENT_ASCENT} ${COMPONENT_DIMS} ${COMPONENT_EB} PARTICLES ${COMPONENT_PIC} ${COMPONENT_PRECISION} ${COMPONENT_SENSEI} TINYP LSOLVERS)
++        find_package(AMReX 23.10 CONFIG REQUIRED COMPONENTS ${COMPONENT_ASCENT} ${COMPONENT_DIMS} ${COMPONENT_EB} PARTICLES ${COMPONENT_PIC} ${COMPONENT_PRECISION} ${COMPONENT_SENSEI} LSOLVERS)
++        # note: TINYP skipped because user-configured and optional
++
++        # AMReX CMake helper scripts
++        list(APPEND CMAKE_MODULE_PATH "${AMReX_DIR}/AMReXCMakeModules")
++
+         message(STATUS "AMReX: Found version '${AMReX_VERSION}'")
+     endif()
+ endmacro()
+diff --git a/cmake/dependencies/pyAMReX.cmake b/cmake/dependencies/pyAMReX.cmake
+index 2ff354785d..c94a41e838 100644
+--- a/cmake/dependencies/pyAMReX.cmake
++++ b/cmake/dependencies/pyAMReX.cmake
+@@ -65,7 +65,7 @@ function(find_pyamrex)
+     elseif(NOT WarpX_pyamrex_internal)
+         # TODO: MPI control
+         find_package(pyAMReX 23.10 CONFIG REQUIRED)
+-        message(STATUS "pyAMReX: Found version '${pyamrex_VERSION}'")
++        message(STATUS "pyAMReX: Found version '${pyAMReX_VERSION}'")
+     endif()
+ endfunction()
+ 

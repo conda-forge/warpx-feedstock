@@ -17,19 +17,17 @@ cmake ^
     -DCMAKE_NM=llvm-nm                    ^
     -DCMAKE_VERBOSE_MAKEFILE=ON           ^
     -DPYINSTALLOPTIONS="--no-build-isolation"  ^
-    -DPython_EXECUTABLE=%PYTHON%          ^
-    -DpyAMReX_pybind11_internal=OFF       ^
-    -DWarpX_amrex_repo=https://github.com/ax3l/amrex.git  ^
-    -DWarpX_amrex_branch=fix-realvect-static-export  ^
-    -DWarpX_pyamrex_repo=https://github.com/ax3l/pyamrex.git  ^
-    -DWarpX_pyamrex_branch=topic-pip-nodeps  ^
-    -DWarpX_ASCENT=OFF  ^
-    -DWarpX_PYTHON=ON   ^
-    -DWarpX_MPI=OFF     ^
-    -DWarpX_OPENPMD=ON  ^
-    -DWarpX_openpmd_internal=OFF ^
-    -DWarpX_PSATD=ON    ^
-    -DWarpX_QED=ON      ^
+    -DPython_EXECUTABLE=%PYTHON%  ^
+    -DWarpX_amrex_internal=OFF    ^
+    -DWarpX_ASCENT=OFF            ^
+    -DWarpX_MPI=OFF               ^
+    -DWarpX_OPENPMD=ON            ^
+    -DWarpX_openpmd_internal=OFF  ^
+    -DWarpX_PSATD=ON              ^
+    -DWarpX_pyamrex_internal=OFF  ^
+    -DWarpX_pybind11_internal=OFF ^
+    -DWarpX_PYTHON=ON             ^
+    -DWarpX_QED=ON                ^
     -DWarpX_DIMS="1;2;RZ;3"
 if errorlevel 1 exit 1
 
@@ -40,14 +38,8 @@ if errorlevel 1 exit 1
 :: install
 cmake --build build --config Release --target install
 if errorlevel 1 exit 1
-cmake --build build --config Release --target pyamrex_pip_install_nodeps
-if errorlevel 1 exit 1
 cmake --build build --config Release --target pip_install_nodeps
 if errorlevel 1 exit 1
-
-:: clean "symlink"
-del "%LIBRARY_PREFIX%\lib\amrex.dll"
-del "%LIBRARY_PREFIX%\bin\amrex.dll"
 
 :: test
 ::   skip the pyAMReX tests to save CI time
