@@ -1,6 +1,6 @@
 {% set name = "warpx" %}
 {% set version = "23.10" %}
-{% set build = 1 %}
+{% set build = 2 %}
 {% set sha256 = "6f006336a66799b038362e07b00dd4ec9d0b9da67864cae84d725136842eb0ef" %}
 
 package:
@@ -39,17 +39,19 @@ requirements:
     - pkg-config
     - cmake
     - libgomp       # [linux]
-    - llvm-openmp   # [osx or win]
+    - llvm-openmp   # [osx]
+    - intel-openmp  # [win]
   host:
-    - amrex {{ version }}
+    - amrex >={{ version }}
     - blaspp
     - libboost-headers
     - lapackpp
     - numpy
     - openpmd-api
     - pip
-    - pyamrex {{ version }}
+    - pyamrex >={{ version }}
     - pybind11
+    - pybind11-abi
     - python
     - setuptools
     - wheel
@@ -64,7 +66,7 @@ requirements:
     - {{ pin_compatible('numpy') }}
     - periodictable
     - picmistandard ==0.26.0
-    - pyamrex {{ version }}
+    - pyamrex >={{ version }}
     - python
     - scipy
 
