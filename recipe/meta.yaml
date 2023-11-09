@@ -10,13 +10,6 @@ package:
 source:
   url: https://github.com/ECP-WarpX/WarpX/archive/{{ version }}.tar.gz
   sha256: {{ sha256 }}
-  patches:
-    # Add pip_install_nodeps
-    - 4361.patch
-    # Fix hard-coded Python executable
-    - 4379.patch
-    # Fix External AMReX & pyAMReX Builds
-    - 4390.patch
 
 build:
   number: {{ build }}
@@ -39,8 +32,7 @@ requirements:
     - pkg-config
     - cmake
     - libgomp       # [linux]
-    - llvm-openmp   # [osx]
-    - intel-openmp  # [win]
+    - llvm-openmp   # [osx or win]
   host:
     - amrex >={{ version }}
     - blaspp
@@ -65,7 +57,7 @@ requirements:
   run:
     - {{ pin_compatible('numpy') }}
     - periodictable
-    - picmistandard ==0.26.0
+    - picmistandard ==0.268.0
     - pyamrex >={{ version }}
     - python
     - scipy
