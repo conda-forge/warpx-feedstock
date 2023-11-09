@@ -57,7 +57,7 @@ requirements:
   run:
     - {{ pin_compatible('numpy') }}
     - periodictable
-    - picmistandard ==0.268.0
+    - picmistandard ==0.28.0
     - pyamrex >={{ version }}
     - python
     - scipy
