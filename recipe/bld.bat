@@ -49,3 +49,6 @@ if errorlevel 1 exit 1
 
 :: do not install static libs from ABLASTR
 del "%LIBRARY_PREFIX%\lib\ablastr_*.lib"
+
+:: do not install static libs from WarpX
+del "%LIBRARY_PREFIX%\lib\libwarpx*.lib"
