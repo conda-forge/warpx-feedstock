@@ -46,3 +46,6 @@ if errorlevel 1 exit 1
 ::set "EXCLUSION_REGEX=AMReX"
 ::ctest --test-dir build --build-config Release --output-on-failure -E %EXCLUSION_REGEX%
 ::if errorlevel 1 exit 1
+
+:: do not install static libs from ABLASTR
+del "%LIBRARY_PREFIX%\lib\ablastr_*.lib"
