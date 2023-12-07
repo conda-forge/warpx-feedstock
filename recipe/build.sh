@@ -56,3 +56,9 @@ cp build/lib/libwarpx.* ${PREFIX}/lib/
 
 # add Python API (PICMI interface)
 cmake --build build --target pip_install_nodeps
+
+# do not install static libs from ABLASTR
+rm -rf ${PREFIX}/lib/libablastr_*.a
+
+# do not install static libs from WarpX
+rm -rf ${PREFIX}/lib/libwarpx*.a
