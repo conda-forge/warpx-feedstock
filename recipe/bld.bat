@@ -28,6 +28,7 @@ cmake ^
     -DWarpX_pybind11_internal=OFF ^
     -DWarpX_PYTHON=ON             ^
     -DWarpX_QED=ON                ^
+    -DWarpX_CCACHE=OFF            ^
     -DWarpX_DIMS="1;2;RZ;3"
 if errorlevel 1 exit 1
 

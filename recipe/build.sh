@@ -38,6 +38,7 @@ cmake \
     -DWarpX_pybind11_internal=OFF \
     -DWarpX_PYTHON=ON             \
     -DWarpX_QED=ON                \
+    -DWarpX_CCACHE=OFF            \
     -DWarpX_DIMS="1;2;RZ;3"
 
 cmake --build build --parallel ${CPU_COUNT}
