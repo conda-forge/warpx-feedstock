@@ -1,7 +1,7 @@
 {% set name = "warpx" %}
-{% set version = "24.04" %}
+{% set version = "24.05" %}
 {% set build = 0 %}
-{% set sha256 = "063595b28675dcbb5fb0b888c35ac5ab4e61388534e1090a3528f3bb3568cc4c" %}
+{% set sha256 = "e8b082bd8cf1929c086e1eae531d4574b562000547e1920c74b0c1ed79a8e0bd" %}
 
 package:
   name: {{ name|lower }}
@@ -28,6 +28,7 @@ requirements:
     - cross-python_{{ target_platform }}     # [build_platform != target_platform]
     - pybind11                               # [build_platform != target_platform]
     - {{ compiler('c') }}
+    - {{ stdlib("c") }}
     - {{ compiler('cxx') }}
     - clang         # [win]
     - lld           # [win]
