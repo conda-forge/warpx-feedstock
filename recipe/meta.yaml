@@ -10,10 +10,6 @@ package:
 source:
   url: https://github.com/ECP-WarpX/WarpX/archive/{{ version }}.tar.gz
   sha256: {{ sha256 }}
-  patches:
-    # lockAdd w/ explicit Templates
-    # https://github.com/ECP-WarpX/WarpX/pull/4835
-    - 4835.patch
 
 build:
   number: {{ build }}
