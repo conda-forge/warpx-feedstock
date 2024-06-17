@@ -1,7 +1,7 @@
 {% set name = "warpx" %}
-{% set version = "24.05" %}
+{% set version = "24.06" %}
 {% set build = 0 %}
-{% set sha256 = "e8b082bd8cf1929c086e1eae531d4574b562000547e1920c74b0c1ed79a8e0bd" %}
+{% set sha256 = "67b5e3594fe8d40a43ab1f994975ca085f48ad8aeb23f0952cb2497811a4ca09" %}
 
 package:
   name: {{ name|lower }}
@@ -10,10 +10,6 @@ package:
 source:
   url: https://github.com/ECP-WarpX/WarpX/archive/{{ version }}.tar.gz
   sha256: {{ sha256 }}
-  patches:
-    # lockAdd w/ explicit Templates
-    # https://github.com/ECP-WarpX/WarpX/pull/4835
-    - 4835.patch
 
 build:
   number: {{ build }}
