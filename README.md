@@ -374,6 +374,7 @@ In order to produce a uniquely identifiable distribution:
 Feedstock Maintainers
 =====================
 
+* [@EZoni](https://github.com/EZoni/)
 * [@RemiLehe](https://github.com/RemiLehe/)
 * [@ax3l](https://github.com/ax3l/)
 
