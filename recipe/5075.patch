@@ -1,0 +1,40 @@
+From e42f99530e9cd23f808c97c44a3d155cf8cbe650 Mon Sep 17 00:00:00 2001
+From: Axel Huebl <axel.huebl@plasma.ninja>
+Date: Mon, 22 Jul 2024 14:58:20 -0500
+Subject: [PATCH] PICMI (Bucket): NumPy 2.0 Compatibility
+
+`repr` returns `'np.float64(value)'` instead of `'value'` in
+NumPy 2.0
+---
+ Python/pywarpx/Bucket.py | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
+
+diff --git a/Python/pywarpx/Bucket.py b/Python/pywarpx/Bucket.py
+index 91a34b9d3d6..4989dd44777 100644
+--- a/Python/pywarpx/Bucket.py
++++ b/Python/pywarpx/Bucket.py
+@@ -59,7 +59,9 @@ def attrlist(self):
+         for attr, value in self.argvattrs.items():
+             if value is None:
+                 continue
+-            # --- repr is applied to value so that for floats, all of the digits are included.
++            # --- str (and repr) crop some digits for floats. TODO: we should format
++            #     floating point numbers & numpy scalars to the significant digits of the
++            #     precision of amrex::Real/ParticleReal
+             # --- The strip of "'" is then needed when value is a string.
+             if isinstance(value, str):
+                 if value.find('=') > -1:
+@@ -73,11 +75,11 @@ def attrlist(self):
+                     continue
+                 # --- For lists, tuples, and arrays make a space delimited string of the values.
+                 # --- The lambda is needed in case this is a list of strings.
+-                rhs = ' '.join(map(lambda s : repr(s).strip("'"), value))
++                rhs = ' '.join(map(lambda s : str(s).strip("'"), value))
+             elif isinstance(value, bool):
+                 rhs = 1 if value else 0
+             else:
+                 rhs = value
+-            attrstring = '{0}.{1} = {2}'.format(self.instancename, attr, repr(rhs).strip("'"))
++            attrstring = '{0}.{1} = {2}'.format(self.instancename, attr, str(rhs).strip("'"))
+             result += [attrstring]
+         return result

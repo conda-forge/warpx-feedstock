@@ -10,6 +10,10 @@ package:
 source:
   url: https://github.com/ECP-WarpX/WarpX/archive/{{ version }}.tar.gz
   sha256: {{ sha256 }}
+  patches:
+    # NumPy 2.0 Compatibility for PICMI
+    # https://github.com/ECP-WarpX/WarpX/pull/5075
+    - 5075.patch
 
 build:
   number: {{ build }}
