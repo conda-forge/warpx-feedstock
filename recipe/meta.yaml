@@ -1,6 +1,6 @@
 {% set name = "warpx" %}
 {% set version = "24.07" %}
-{% set build = 0 %}
+{% set build = 1 %}
 {% set sha256 = "936549f4cbfaf74e3d92bae907c4f44fc52f463c9ae354448142af31e79df1e7" %}
 
 package:
@@ -10,6 +10,10 @@ package:
 source:
   url: https://github.com/ECP-WarpX/WarpX/archive/{{ version }}.tar.gz
   sha256: {{ sha256 }}
+  patches:
+    # NumPy 2.0 Compatibility for PICMI
+    # https://github.com/ECP-WarpX/WarpX/pull/5075
+    - 5075.patch
 
 build:
   number: {{ build }}
@@ -56,7 +60,6 @@ requirements:
     - libblas   # [win]
     - libcblas  # [win]
   run:
-    - {{ pin_compatible('numpy') }}
     - periodictable
     - picmistandard ==0.28.0
     - pyamrex >={{ version }}
@@ -103,4 +106,5 @@ about:
 extra:
   recipe-maintainers:
     - ax3l
+    - EZoni
     - RemiLehe
