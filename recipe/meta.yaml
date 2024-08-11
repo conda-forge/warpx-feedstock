@@ -1,7 +1,7 @@
 {% set name = "warpx" %}
-{% set version = "24.07" %}
-{% set build = 1 %}
-{% set sha256 = "936549f4cbfaf74e3d92bae907c4f44fc52f463c9ae354448142af31e79df1e7" %}
+{% set version = "24.08" %}
+{% set build = 0 %}
+{% set sha256 = "8da1f2967f613a65a295260260aa4f081ac1d1b7c1d6987d294e02b86099df08" %}
 
 package:
   name: {{ name|lower }}
@@ -10,10 +10,6 @@ package:
 source:
   url: https://github.com/ECP-WarpX/WarpX/archive/{{ version }}.tar.gz
   sha256: {{ sha256 }}
-  patches:
-    # NumPy 2.0 Compatibility for PICMI
-    # https://github.com/ECP-WarpX/WarpX/pull/5075
-    - 5075.patch
 
 build:
   number: {{ build }}
@@ -61,7 +57,7 @@ requirements:
     - libcblas  # [win]
   run:
     - periodictable
-    - picmistandard ==0.28.0
+    - picmistandard ==0.29.0
     - pyamrex >={{ version }}
     - python
     - scipy
