@@ -57,7 +57,7 @@ requirements:
     - libcblas  # [win]
   run:
     - periodictable
-    - picmistandard ==0.29.0
+    - picmistandard ==0.30.0
     - pyamrex >={{ version }}
     - python
     - scipy
