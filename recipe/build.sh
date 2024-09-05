@@ -33,7 +33,7 @@ cmake \
     -DWarpX_MPI=OFF               \
     -DWarpX_OPENPMD=ON            \
     -DWarpX_openpmd_internal=OFF  \
-    -DWarpX_PSATD=ON              \
+    -DWarpX_FFT=ON              \
     -DWarpX_pyamrex_internal=OFF  \
     -DWarpX_pybind11_internal=OFF \
     -DWarpX_PYTHON=ON             \
