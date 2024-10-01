@@ -15,7 +15,7 @@ cdt_arch:
 cdt_name:
 - cos7
 channel_sources:
-- conda-forge
+- conda-forge/label/python_rc,conda-forge
 channel_targets:
 - conda-forge main
 cxx_compiler:
@@ -29,7 +29,7 @@ fftw:
 libboost_headers:
 - '1.86'
 numpy:
-- '2.0'
+- '2'
 pin_run_as_build:
   python:
     min_pin: x.x
@@ -37,7 +37,7 @@ pin_run_as_build:
 pybind11_abi:
 - '4'
 python:
-- 3.9.* *_cpython
+- 3.13.* *_cp313
 python_impl:
 - cpython
 target_platform:
@@ -50,3 +50,4 @@ zip_keys:
 - - python
   - numpy
   - python_impl
+  - channel_sources
