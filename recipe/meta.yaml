@@ -1,7 +1,7 @@
 {% set name = "warpx" %}
-{% set version = "24.09" %}
-{% set build = 1 %}
-{% set sha256 = "258d88c921f73b3794d3db0ded648d8d2547b87faf95fdbd03e5129cfb0dc95f" %}
+{% set version = "24.10" %}
+{% set build = 0 %}
+{% set sha256 = "1fe3a86bf820a2ecef853cdcd9427fba4e0cb1efb05326da7dc9dbf94551202f" %}
 
 package:
   name: {{ name|lower }}
@@ -10,6 +10,10 @@ package:
 source:
   url: https://github.com/ECP-WarpX/WarpX/archive/{{ version }}.tar.gz
   sha256: {{ sha256 }}
+  patches:
+    # Fix Python Package version
+    # https://github.com/ECP-WarpX/WarpX/pull/5359
+    - 5359.patch
 
 build:
   number: {{ build }}
@@ -65,21 +69,20 @@ requirements:
 test:
   source_files:
     - Examples/Physics_applications/laser_acceleration/inputs_*
-    - Examples/Physics_applications/laser_acceleration/PICMI_inputs_*
   files:
     - test.sh   # [unix]
     - test.bat  # [win]
   imports:
     - pywarpx
   commands:
-    - test -f ${PREFIX}/bin/warpx.1d.NOMPI.OMP.DP.PDP.OPMD.FFT.QED  # [unix]
-    - test -f ${PREFIX}/bin/warpx.2d.NOMPI.OMP.DP.PDP.OPMD.FFT.QED  # [unix]
-    - test -f ${PREFIX}/bin/warpx.3d.NOMPI.OMP.DP.PDP.OPMD.FFT.QED  # [unix]
-    - test -f ${PREFIX}/bin/warpx.rz.NOMPI.OMP.DP.PDP.OPMD.FFT.QED  # [unix]
-    - if not exist %LIBRARY_PREFIX%\bin\warpx.1d.NOMPI.OMP.DP.PDP.OPMD.FFT.QED.exe exit 1  # [win]
-    - if not exist %LIBRARY_PREFIX%\bin\warpx.2d.NOMPI.OMP.DP.PDP.OPMD.FFT.QED.exe exit 1  # [win]
-    - if not exist %LIBRARY_PREFIX%\bin\warpx.3d.NOMPI.OMP.DP.PDP.OPMD.FFT.QED.exe exit 1  # [win]
-    - if not exist %LIBRARY_PREFIX%\bin\warpx.rz.NOMPI.OMP.DP.PDP.OPMD.FFT.QED.exe exit 1  # [win]
+    - test -f ${PREFIX}/bin/warpx.1d.NOMPI.OMP.DP.PDP.OPMD.FFT.EB.QED  # [unix]
+    - test -f ${PREFIX}/bin/warpx.2d.NOMPI.OMP.DP.PDP.OPMD.FFT.EB.QED  # [unix]
+    - test -f ${PREFIX}/bin/warpx.3d.NOMPI.OMP.DP.PDP.OPMD.FFT.EB.QED  # [unix]
+    - test -f ${PREFIX}/bin/warpx.rz.NOMPI.OMP.DP.PDP.OPMD.FFT.EB.QED  # [unix]
+    - if not exist %LIBRARY_PREFIX%\bin\warpx.1d.NOMPI.OMP.DP.PDP.OPMD.FFT.EB.QED.exe exit 1  # [win]
+    - if not exist %LIBRARY_PREFIX%\bin\warpx.2d.NOMPI.OMP.DP.PDP.OPMD.FFT.EB.QED.exe exit 1  # [win]
+    - if not exist %LIBRARY_PREFIX%\bin\warpx.3d.NOMPI.OMP.DP.PDP.OPMD.FFT.EB.QED.exe exit 1  # [win]
+    - if not exist %LIBRARY_PREFIX%\bin\warpx.rz.NOMPI.OMP.DP.PDP.OPMD.FFT.EB.QED.exe exit 1  # [win]
     # smoke tests: execute
     - ./test.sh      # [unix and build_platform == target_platform]
     - call test.bat  # [win]
