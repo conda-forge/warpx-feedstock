@@ -10,10 +10,6 @@ package:
 source:
   url: https://github.com/ECP-WarpX/WarpX/archive/{{ version }}.tar.gz
   sha256: {{ sha256 }}
-  patches:
-    # Fix Python Package version
-    # https://github.com/ECP-WarpX/WarpX/pull/5359
-    - 5359.patch
 
 build:
   number: {{ build }}
