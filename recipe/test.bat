@@ -12,7 +12,7 @@ warpx.2d.NOMPI.OMP.DP.PDP.OPMD.FFT.EB.QED.exe %TEST_DIR%\inputs_base_2d max_step
 if errorlevel 1 exit 1
 
 :: 1D
-warpx.1d.NOMPI.OMP.DP.PDP.OPMD.FFT.EB.QED.exe %TEST_DIR%\inputs_test_1d_laser_acceleration max_step=50 diag1.intervals=10 diag1.format=openpmd
+warpx.1d.NOMPI.OMP.DP.PDP.OPMD.FFT.EB.QED.exe %TEST_DIR%\inputs_base_1d max_step=50 diag1.intervals=10 diag1.format=openpmd
 if errorlevel 1 exit 1
 
 :: RZ
