@@ -1,7 +1,7 @@
 {% set name = "warpx" %}
-{% set version = "24.11" %}
+{% set version = "25.01" %}
 {% set build = 0 %}
-{% set sha256 = "b8a084ebb1e491bc379bb270396a7679217d3816e3da07961cb144f8d05e6168" %}
+{% set sha256 = "24e19b147cd48bf1320f12645d835b631c359e8cf61a8858f8546ed6e63101b6" %}
 
 package:
   name: {{ name|lower }}
@@ -57,7 +57,7 @@ requirements:
     - libcblas  # [win]
   run:
     - periodictable
-    - picmistandard ==0.30.0
+    - picmistandard ==0.33.0
     - pyamrex >={{ version }}
     - python
     - scipy
