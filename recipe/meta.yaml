@@ -40,7 +40,7 @@ requirements:
     - libboost-headers
     - lapackpp
     - numpy
-    - openpmd-api=*=nompi*
+    - openpmd-api =*=nompi*
     - pip
     - pyamrex >={{ version }}
     - pybind11
