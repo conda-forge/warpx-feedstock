@@ -1,7 +1,7 @@
 {% set name = "warpx" %}
-{% set version = "25.01" %}
+{% set version = "25.02" %}
 {% set build = 0 %}
-{% set sha256 = "24e19b147cd48bf1320f12645d835b631c359e8cf61a8858f8546ed6e63101b6" %}
+{% set sha256 = "c65385a3598bf43278c0b1c10ae2a5a07c1a46f6fa98deded385ecca2021a1a2" %}
 
 package:
   name: {{ name|lower }}
@@ -40,7 +40,7 @@ requirements:
     - libboost-headers
     - lapackpp
     - numpy
-    - openpmd-api
+    - openpmd-api =*=nompi*
     - pip
     - pyamrex >={{ version }}
     - pybind11
