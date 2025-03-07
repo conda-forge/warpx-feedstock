@@ -35,14 +35,14 @@ requirements:
     - libgomp       # [linux]
     - llvm-openmp   # [osx or win]
   host:
-    - amrex >={{ version }}
+    - amrex =={{ version }}
     - blaspp
     - libboost-headers
     - lapackpp
     - numpy
     - openpmd-api =*=nompi*
     - pip
-    - pyamrex >={{ version }}
+    - pyamrex =={{ version }}
     - pybind11
     - pybind11-abi
     - python
@@ -58,7 +58,7 @@ requirements:
   run:
     - periodictable
     - picmistandard ==0.33.0
-    - pyamrex >={{ version }}
+    - pyamrex =={{ version }}
     - python
     - scipy
 
