@@ -3,20 +3,19 @@ About warpx-feedstock
 
 Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/warpx-feedstock/blob/main/LICENSE.txt)
 
-Home: https://ecp-warpx.github.io
+Home: https://ecp-warpx.github.io/
 
 Package license: BSD-3-Clause-LBNL
 
-Summary: WarpX is an advanced electromagnetic Particle-In-Cell code.
+Summary: WarpX is an advanced electromagnetic & electrostatic Particle-In-Cell code.
 
 Development: https://github.com/ECP-WarpX/WarpX
 
-Documentation: https://warpx.readthedocs.io
+Documentation: https://warpx.readthedocs.io/
 
-WarpX is an advanced electromagnetic Particle-In-Cell code.
+WarpX is an advanced electromagnetic & electrostatic Particle-In-Cell code.
 It supports many features including: Perfectly-Matched Layers (PML),
-Boosted-frame simulations, particle collisions, mesh refinement.
-
+Boosted-frame simulations, particle collisions, and mesh refinement.
 
 Current build status
 ====================
