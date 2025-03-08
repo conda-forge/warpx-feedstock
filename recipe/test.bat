@@ -20,17 +20,17 @@ warpx.rz.NOMPI.OMP.DP.PDP.OPMD.FFT.EB.QED.exe %TEST_DIR%\inputs_base_rz max_step
 if errorlevel 1 exit 1
 
 :: Python: 3D
-%PYTHON% %TEST_DIR%\inputs_test_3d_laser_acceleration_picmi.py
+python %TEST_DIR%\inputs_test_3d_laser_acceleration_picmi.py
 if errorlevel 1 exit 1
 
 :: Python: 2D
-%PYTHON% %TEST_DIR%\inputs_test_2d_laser_acceleration_mr_picmi.py
+python %TEST_DIR%\inputs_test_2d_laser_acceleration_mr_picmi.py
 if errorlevel 1 exit 1
 
 :: Python: 1D
-%PYTHON% %TEST_DIR%\inputs_test_1d_laser_acceleration_picmi.py
+python %TEST_DIR%\inputs_test_1d_laser_acceleration_picmi.py
 if errorlevel 1 exit 1
 
 :: Python: RZ
-%PYTHON% %TEST_DIR%\inputs_test_rz_laser_acceleration_picmi.py
+python %TEST_DIR%\inputs_test_rz_laser_acceleration_picmi.py
 if errorlevel 1 exit 1

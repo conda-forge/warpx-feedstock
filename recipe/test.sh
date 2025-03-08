@@ -18,13 +18,13 @@ warpx.1d.NOMPI.OMP.DP.PDP.OPMD.FFT.EB.QED ${TEST_DIR}/inputs_base_1d max_step=50
 warpx.rz.NOMPI.OMP.DP.PDP.OPMD.FFT.EB.QED ${TEST_DIR}/inputs_base_rz max_step=50 diag1.intervals=10 diag1.format=openpmd diag1.fields_to_plot=Er Et Ez Br Bt Bz jr jt jz rho
 
 # Python: 3D
-$PYTHON ${TEST_DIR}/inputs_test_3d_laser_acceleration_picmi.py
+python ${TEST_DIR}/inputs_test_3d_laser_acceleration_picmi.py
 
 # Python: 2D
-$PYTHON ${TEST_DIR}/inputs_test_2d_laser_acceleration_mr_picmi.py
+python ${TEST_DIR}/inputs_test_2d_laser_acceleration_mr_picmi.py
 
 # Python: 1D
-$PYTHON ${TEST_DIR}/inputs_test_1d_laser_acceleration_picmi.py
+python ${TEST_DIR}/inputs_test_1d_laser_acceleration_picmi.py
 
 # Python: RZ
-$PYTHON ${TEST_DIR}/inputs_test_rz_laser_acceleration_picmi.py
+python ${TEST_DIR}/inputs_test_rz_laser_acceleration_picmi.py
