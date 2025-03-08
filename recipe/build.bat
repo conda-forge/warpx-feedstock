@@ -16,7 +16,6 @@ cmake ^
     -DCMAKE_LINKER=lld-link               ^
     -DCMAKE_NM=llvm-nm                    ^
     -DCMAKE_VERBOSE_MAKEFILE=ON           ^
-    -DPYINSTALLOPTIONS="--no-build-isolation"  ^
     -DPython_EXECUTABLE=%PYTHON%  ^
     -DWarpX_amrex_internal=OFF    ^
     -DWarpX_ASCENT=OFF            ^
