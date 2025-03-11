@@ -10,7 +10,7 @@ package:
   version: ${{ version }}
 
 source:
-  url: https://github.com/ECP-WarpX/WarpX/archive/${{ version }}.tar.gz
+  url: https://github.com/BLAST-WarpX/warpx/archive/${{ version }}.tar.gz
   sha256: ec0a032fd2c838acec4b251fa3a8180b47186cc2216bc1adc6242cd275977590
 
 build:
@@ -118,8 +118,8 @@ about:
     WarpX is an advanced electromagnetic & electrostatic Particle-In-Cell code.
     It supports many features including: Perfectly-Matched Layers (PML),
     Boosted-frame simulations, particle collisions, and mesh refinement.
-  homepage: https://ecp-warpx.github.io
-  repository: https://github.com/ECP-WarpX/WarpX
+  homepage: https://blast-warpx.github.io
+  repository: https://github.com/BLAST-WarpX/warpx
   documentation: https://warpx.readthedocs.io
 
 extra:
