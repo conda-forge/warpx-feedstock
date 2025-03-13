@@ -11,7 +11,7 @@ package:
 
 source:
   url: https://github.com/BLAST-WarpX/warpx/archive/${{ version }}.tar.gz
-  sha256: ec0a032fd2c838acec4b251fa3a8180b47186cc2216bc1adc6242cd275977590
+  sha256: 18155ff67b036a00db2a25303058316167192a81cfe6dc1dec65fdef0b6d9903
 
 build:
   skip: python_impl == "pypy"
