@@ -3,7 +3,7 @@ schema_version: 1
 context:
   name: warpx
   version: 25.03
-  build: 0
+  build: 1
 
 package:
   name: ${{ name|lower }}
