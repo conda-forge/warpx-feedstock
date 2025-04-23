@@ -14,7 +14,7 @@ source:
   sha256: 374136fbf566d65307dfe95ae12686ccaf3e649d2f66a79cd856585986c94ac7
 
 build:
-  skip: python_impl == "pypy"
+  skip: python_impl == "pypy" or (target_platform == "linux-aarch64" and python == "3.13.* *_cp313")
   number: ${{ build }}
 
 requirements:
