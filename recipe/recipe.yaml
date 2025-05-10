@@ -2,7 +2,7 @@ schema_version: 1
 
 context:
   name: warpx
-  version: "25.04"
+  version: "25.05"
   build: 0
 
 package:
@@ -11,7 +11,7 @@ package:
 
 source:
   url: https://github.com/BLAST-WarpX/warpx/archive/${{ version }}.tar.gz
-  sha256: 374136fbf566d65307dfe95ae12686ccaf3e649d2f66a79cd856585986c94ac7
+  sha256: 8ba145f2533eeaac0522cd4b1901f7f6cf5cbf9b236d65f9b4b49cde17bd22ad
 
 build:
   skip: python_impl == "pypy"
