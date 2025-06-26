@@ -35,7 +35,7 @@ pin_run_as_build:
 pybind11_abi:
 - '4'
 python:
-- 3.13.* *_cp313
+- 3.9.* *_cpython
 python_impl:
 - cpython
 target_platform:
@@ -43,6 +43,3 @@ target_platform:
 zip_keys:
 - - c_compiler_version
   - cxx_compiler_version
-- - python
-  - numpy
-  - python_impl
