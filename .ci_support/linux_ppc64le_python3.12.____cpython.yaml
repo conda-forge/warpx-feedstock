@@ -23,7 +23,7 @@ fftw:
 libboost_headers:
 - '1.86'
 numpy:
-- '2.0'
+- '2'
 pin_run_as_build:
   python:
     min_pin: x.x
@@ -31,14 +31,11 @@ pin_run_as_build:
 pybind11_abi:
 - '4'
 python:
-- 3.11.* *_cpython
+- 3.12.* *_cpython
 python_impl:
 - cpython
 target_platform:
-- linux-64
+- linux-ppc64le
 zip_keys:
 - - c_compiler_version
   - cxx_compiler_version
-- - python
-  - numpy
-  - python_impl
