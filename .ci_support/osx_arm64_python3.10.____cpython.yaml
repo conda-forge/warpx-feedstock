@@ -21,7 +21,7 @@ cxx_compiler_version:
 fftw:
 - '3'
 libboost_headers:
-- '1.86'
+- '1.88'
 llvm_openmp:
 - '19'
 macos_machine:
