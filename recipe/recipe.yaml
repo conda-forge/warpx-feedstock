@@ -43,14 +43,14 @@ requirements:
     - pkg-config
 
   host:
-    - amrex ==${{ version }}[build=nompi_*]
+    - amrex ==${{ version }}[build=nompi_dp_*]
     - blaspp
     - libboost-headers
     - lapackpp
     - numpy
     - openpmd-api * [build=nompi_*]
     - pip
-    - pyamrex ==${{ version }}[build=nompi_*]
+    - pyamrex ==${{ version }}[build=nompi_dp_*]
     - pybind11
     - pybind11-abi
     - python
@@ -69,7 +69,7 @@ requirements:
   run:
     - periodictable
     - picmistandard ==0.33.0
-    - pyamrex ==${{ version }}[build=nompi_*]
+    - pyamrex ==${{ version }}[build=nompi_dp_*]
     - python
     - scipy
 
