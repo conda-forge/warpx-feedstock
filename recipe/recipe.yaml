@@ -55,6 +55,7 @@ requirements:
     - pybind11-abi
     - python
     - setuptools
+    - vir-simd
     - wheel
     - fftw
     - if: win
