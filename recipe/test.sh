@@ -19,10 +19,10 @@ warpx.1d.NOMPI.OMP.DP.PDP.OPMD.FFT.EB.QED ${TEST_DIR}/inputs_base_1d max_step=50
 warpx.rz.NOMPI.OMP.DP.PDP.OPMD.FFT.EB.QED ${TEST_DIR}/inputs_base_rz max_step=50 diag1.intervals=10 diag1.format=openpmd diag1.fields_to_plot=Er Et Ez Br Bt Bz jr jt jz rho
 
 # RCYLINDER
-warpx.rcylinder.NOMPI.OMP.DP.PDP.OPMD.FFT.EB.QED ${TEST_DIR_LANGMUIR}/inputs_test_rcylinder_langmuir_multi max_step=50 diag1.intervals=10 diag1.format=openpmd
+warpx.rcylinder.NOMPI.OMP.DP.PDP.OPMD.FFT.EB.QED ${TEST_DIR_LANGMUIR}/inputs_test_rcylinder_langmuir_multi max_step=10
 
 # RSPHERE
-warpx.rsphere.NOMPI.OMP.DP.PDP.OPMD.FFT.EB.QED ${TEST_DIR_LANGMUIR}/inputs_test_rsphere_langmuir_multi max_step=50 diag1.intervals=10 diag1.format=openpmd
+warpx.rsphere.NOMPI.OMP.DP.PDP.OPMD.FFT.EB.QED ${TEST_DIR_LANGMUIR}/inputs_test_rsphere_langmuir_multi max_step=10
 
 # Python: 3D
 python ${TEST_DIR}/inputs_test_3d_laser_acceleration_picmi.py

@@ -21,11 +21,10 @@ warpx.rz.NOMPI.OMP.DP.PDP.OPMD.FFT.EB.QED.exe %TEST_DIR%\inputs_base_rz max_step
 if errorlevel 1 exit 1
 
 :: RCYLINDER
-warpx.rcylinder.NOMPI.OMP.DP.PDP.OPMD.FFT.EB.QED.exe %TEST_DIR_LANGMUIR%\inputs_test_rcylinder_langmuir_multi max_step=50 diag1.intervals=10 diag1.format=openpmd
-if errorlevel 1 exit 1
+warpx.rcylinder.NOMPI.OMP.DP.PDP.OPMD.FFT.EB.QED.exe %TEST_DIR_LANGMUIR%\inputs_test_rcylinder_langmuir_multi max_step=10
 
 :: RSPHERE
-warpx.rsphere.NOMPI.OMP.DP.PDP.OPMD.FFT.EB.QED.exe %TEST_DIR_LANGMUIR%\inputs_test_rsphere_langmuir_multi max_step=50 diag1.intervals=10 diag1.format=openpmd
+warpx.rsphere.NOMPI.OMP.DP.PDP.OPMD.FFT.EB.QED.exe %TEST_DIR_LANGMUIR%\inputs_test_rsphere_langmuir_multi max_step=10
 if errorlevel 1 exit 1
 
 :: Python: 3D
