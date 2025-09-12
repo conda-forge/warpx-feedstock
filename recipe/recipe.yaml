@@ -12,6 +12,9 @@ package:
 source:
   url: https://github.com/BLAST-WarpX/warpx/archive/${{ version }}.tar.gz
   sha256: 942ee0f021c5008a037af7bca849612bc7f86ad4dc4fb99cf18ad9859d3b8758
+  patches:
+    # 1D builds for RCylinder, RSphere
+    - 6163.patch
 
 build:
   skip: python_impl == "pypy"
