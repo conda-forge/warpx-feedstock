@@ -2,6 +2,7 @@
 
 set "OMP_NUM_THREADS=2"
 set "TEST_DIR=Examples\Physics_applications\laser_acceleration"
+set "TEST_DIR_LANGMUIR=Examples\Tests\langmuir"
 
 :: 3D
 warpx.3d.NOMPI.OMP.DP.PDP.OPMD.FFT.EB.QED.exe %TEST_DIR%\inputs_base_3d max_step=50 diag1.intervals=10 diag1.format=openpmd
@@ -17,6 +18,14 @@ if errorlevel 1 exit 1
 
 :: RZ
 warpx.rz.NOMPI.OMP.DP.PDP.OPMD.FFT.EB.QED.exe %TEST_DIR%\inputs_base_rz max_step=50 diag1.intervals=10 diag1.format=openpmd diag1.fields_to_plot=Er Et Ez Br Bt Bz jr jt jz rho
+if errorlevel 1 exit 1
+
+:: RCYLINDER
+warpx.rcylinder.NOMPI.OMP.DP.PDP.OPMD.FFT.EB.QED.exe %TEST_DIR_LANGMUIR%\inputs_test_rcylinder_langmuir_multi max_step=50 diag1.intervals=10 diag1.format=openpmd
+if errorlevel 1 exit 1
+
+:: RSPHERE
+warpx.rsphere.NOMPI.OMP.DP.PDP.OPMD.FFT.EB.QED.exe %TEST_DIR_LANGMUIR%\inputs_test_rsphere_langmuir_multi max_step=50 diag1.intervals=10 diag1.format=openpmd
 if errorlevel 1 exit 1
 
 :: Python: 3D

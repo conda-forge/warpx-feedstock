@@ -87,12 +87,16 @@ tests:
         - if: unix
           then:
             - bin/warpx.1d.NOMPI.OMP.DP.PDP.OPMD.FFT.EB.QED
+            - bin/warpx.rcylinder.NOMPI.OMP.DP.PDP.OPMD.FFT.EB.QED
+            - bin/warpx.rsphere.NOMPI.OMP.DP.PDP.OPMD.FFT.EB.QED
             - bin/warpx.2d.NOMPI.OMP.DP.PDP.OPMD.FFT.EB.QED
             - bin/warpx.rz.NOMPI.OMP.DP.PDP.OPMD.FFT.EB.QED
             - bin/warpx.3d.NOMPI.OMP.DP.PDP.OPMD.FFT.EB.QED
         - if: win
           then:
             - Library/bin/warpx.1d.NOMPI.OMP.DP.PDP.OPMD.FFT.EB.QED.exe
+            - Library/bin/warpx.rcylinder.NOMPI.OMP.DP.PDP.OPMD.FFT.EB.QED.exe
+            - Library/bin/warpx.rsphere.NOMPI.OMP.DP.PDP.OPMD.FFT.EB.QED.exe
             - Library/bin/warpx.2d.NOMPI.OMP.DP.PDP.OPMD.FFT.EB.QED.exe
             - Library/bin/warpx.rz.NOMPI.OMP.DP.PDP.OPMD.FFT.EB.QED.exe
             - Library/bin/warpx.3d.NOMPI.OMP.DP.PDP.OPMD.FFT.EB.QED.exe
@@ -110,6 +114,7 @@ tests:
           then: test.bat
       source:
         - Examples/Physics_applications/laser_acceleration/inputs_*
+        - Examples/Tests/langmuir/inputs_*
 
 about:
   license: BSD-3-Clause-LBNL
