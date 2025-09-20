@@ -61,6 +61,8 @@ requirements:
     - vir-simd
     - wheel
     - fftw
+    - if: osx
+      then: zlib
     - if: win
       then:
 # ninja: error: 'D:/bld/warpx_1615224319242/_h_env/Library/lib/lapack.lib', needed by 'lib/warpx.rz.NOMPI.OMP.DP.OPMD.FFT.QED.dll', missing and no known rule to make it
