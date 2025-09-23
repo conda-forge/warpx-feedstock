@@ -35,7 +35,9 @@ python:
 python_impl:
 - cpython
 target_platform:
-- linux-ppc64le
+- linux-aarch64
 zip_keys:
 - - c_compiler_version
   - cxx_compiler_version
+- - python
+  - channel_sources
