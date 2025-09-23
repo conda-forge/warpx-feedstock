@@ -2,7 +2,7 @@ schema_version: 1
 
 context:
   name: warpx
-  version: "25.08"
+  version: "25.09"
   build: 0
 
 package:
@@ -11,7 +11,10 @@ package:
 
 source:
   url: https://github.com/BLAST-WarpX/warpx/archive/${{ version }}.tar.gz
-  sha256: 3b700f4abd6227a6d1ab87df7e853b189f6d305f98d956e25ca47b605ffb246d
+  sha256: 942ee0f021c5008a037af7bca849612bc7f86ad4dc4fb99cf18ad9859d3b8758
+  patches:
+    # 1D builds for RCylinder, RSphere
+    - 6163.patch
 
 build:
   skip: python_impl == "pypy"
@@ -58,6 +61,8 @@ requirements:
     - vir-simd
     - wheel
     - fftw
+    - if: osx
+      then: zlib
     - if: win
       then:
 # ninja: error: 'D:/bld/warpx_1615224319242/_h_env/Library/lib/lapack.lib', needed by 'lib/warpx.rz.NOMPI.OMP.DP.OPMD.FFT.QED.dll', missing and no known rule to make it
@@ -87,12 +92,16 @@ tests:
         - if: unix
           then:
             - bin/warpx.1d.NOMPI.OMP.DP.PDP.OPMD.FFT.EB.QED
+            - bin/warpx.rcylinder.NOMPI.OMP.DP.PDP.OPMD.FFT.EB.QED
+            - bin/warpx.rsphere.NOMPI.OMP.DP.PDP.OPMD.FFT.EB.QED
             - bin/warpx.2d.NOMPI.OMP.DP.PDP.OPMD.FFT.EB.QED
             - bin/warpx.rz.NOMPI.OMP.DP.PDP.OPMD.FFT.EB.QED
             - bin/warpx.3d.NOMPI.OMP.DP.PDP.OPMD.FFT.EB.QED
         - if: win
           then:
             - Library/bin/warpx.1d.NOMPI.OMP.DP.PDP.OPMD.FFT.EB.QED.exe
+            - Library/bin/warpx.rcylinder.NOMPI.OMP.DP.PDP.OPMD.FFT.EB.QED.exe
+            - Library/bin/warpx.rsphere.NOMPI.OMP.DP.PDP.OPMD.FFT.EB.QED.exe
             - Library/bin/warpx.2d.NOMPI.OMP.DP.PDP.OPMD.FFT.EB.QED.exe
             - Library/bin/warpx.rz.NOMPI.OMP.DP.PDP.OPMD.FFT.EB.QED.exe
             - Library/bin/warpx.3d.NOMPI.OMP.DP.PDP.OPMD.FFT.EB.QED.exe
@@ -110,6 +119,7 @@ tests:
           then: test.bat
       source:
         - Examples/Physics_applications/laser_acceleration/inputs_*
+        - Examples/Tests/langmuir/inputs_*
 
 about:
   license: BSD-3-Clause-LBNL
