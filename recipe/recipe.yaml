@@ -2,8 +2,8 @@ schema_version: 1
 
 context:
   name: warpx
-  version: "25.09"
-  build: 1
+  version: "25.10"
+  build: 0
 
 package:
   name: ${{ name|lower }}
@@ -11,7 +11,7 @@ package:
 
 source:
   url: https://github.com/BLAST-WarpX/warpx/archive/${{ version }}.tar.gz
-  sha256: 942ee0f021c5008a037af7bca849612bc7f86ad4dc4fb99cf18ad9859d3b8758
+  sha256: d505efc2f1c14d2d051a63669c08ec3d3434641094e9bef3cb9324a4f68325af
   patches:
     # 1D builds for RCylinder, RSphere
     - 6163.patch
