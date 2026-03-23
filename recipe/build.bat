@@ -19,6 +19,7 @@ cmake ^
     -DCMAKE_NM=llvm-nm                    ^
     -DCMAKE_VERBOSE_MAKEFILE=ON           ^
     -DPython_EXECUTABLE=%PYTHON%  ^
+    -DAMReX_FFTW_IGNORE_OMP=ON    ^
     -DWarpX_amrex_internal=OFF    ^
     -DWarpX_ASCENT=OFF            ^
     -DWarpX_MPI=OFF               ^
