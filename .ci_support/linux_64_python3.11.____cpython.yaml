@@ -30,8 +30,6 @@ pybind11_abi:
 - '11'
 python:
 - 3.11.* *_cpython
-python_impl:
-- cpython
 target_platform:
 - linux-64
 zip_keys:

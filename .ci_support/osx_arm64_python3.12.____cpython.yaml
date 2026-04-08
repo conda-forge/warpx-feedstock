@@ -36,8 +36,6 @@ pybind11_abi:
 - '11'
 python:
 - 3.12.* *_cpython
-python_impl:
-- cpython
 target_platform:
 - osx-arm64
 zip_keys:
