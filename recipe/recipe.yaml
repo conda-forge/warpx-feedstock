@@ -2,7 +2,7 @@ schema_version: 1
 
 context:
   name: warpx
-  version: "26.04"
+  version: "26.05"
   build: 0
 
 package:
@@ -11,7 +11,7 @@ package:
 
 source:
   url: https://github.com/BLAST-WarpX/warpx/archive/${{ version }}.tar.gz
-  sha256: 484175b83b7752c2de1d947b181f2e1406d27dda95b4f51dbf7fcbc78c5a4bc4
+  sha256: 4cbbbaa444b96252b9f7e2cacd6329ac5b287595f8aa34052f6dc5c16ac34595
 
 build:
   skip:
