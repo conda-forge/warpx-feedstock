@@ -33,6 +33,7 @@ requirements:
     - if: win
       then:
         - clang
+        - cmd
         - lld
         - llvm-openmp
         - ninja
