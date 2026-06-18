@@ -1,0 +1,8 @@
+# Target the x86-64-v3 microarchitecture (AVX2 + FMA + BMI) on all x86_64 instead
+# of the conda-forge -march=nocona default. On Unix this drives the
+# x86_64-microarch-level build dependency; on Windows the flag is set via
+# /arch:AVX2 in build.bat and the __archspec guard is added as a run dependency
+# (see recipe.yaml).
+microarch_level:
+  - 0  # [not x86_64]
+  - 3  # [x86_64]

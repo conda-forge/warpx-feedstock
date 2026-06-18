@@ -3,7 +3,7 @@ schema_version: 1
 context:
   name: warpx
   version: "26.06"
-  build: 0
+  build: 1
 
 package:
   name: ${{ name|lower }}
@@ -28,6 +28,12 @@ requirements:
     - ${{ compiler('c') }}
     - ${{ stdlib("c") }}
     - ${{ compiler('cxx') }}
+    # Target the x86-64-v3 microarchitecture on Unix x86_64 (linux-64/osx-64).
+    # Injects -march=x86-64-v3 and adds an __archspec run-export so the package
+    # only installs on v3-capable CPUs. This activation package is __unix-only;
+    # Windows sets the flag in build.bat and adds the __archspec guard in run.
+    - if: unix and x86_64
+      then: x86_64-microarch-level ==${{ microarch_level }}
     - if: unix
       then: make
     - if: win
@@ -75,6 +81,12 @@ requirements:
     - pyamrex ==${{ version }}[build=nompi_dp_*]
     - python
     - scipy
+    # On Windows the x86_64-microarch-level activation package is unavailable
+    # (__unix-only), so add the internal __archspec guard package directly. This
+    # mirrors the run-export the Unix builds get and keeps the v3-built Windows
+    # package from installing on pre-v3 CPUs. The -march flag is set in build.bat.
+    - if: win
+      then: _x86_64-microarch-level >=${{ microarch_level }}
 
   run_exports:
     # releases are not (yet) compatible
