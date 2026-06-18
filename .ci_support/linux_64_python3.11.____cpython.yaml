@@ -20,6 +20,8 @@ fftw:
 - '3'
 libboost_headers:
 - '1.90'
+microarch_level:
+- '3'
 numpy:
 - '2'
 pin_run_as_build:
