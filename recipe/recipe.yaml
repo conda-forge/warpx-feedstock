@@ -2,8 +2,8 @@ schema_version: 1
 
 context:
   name: warpx
-  version: "26.06"
-  build: 1
+  version: "26.07"
+  build: 0
 
 package:
   name: ${{ name|lower }}
@@ -11,7 +11,7 @@ package:
 
 source:
   url: https://github.com/BLAST-WarpX/warpx/archive/${{ version }}.tar.gz
-  sha256: 260869743fa5995fcdce964ebb3996efe5fd4126da753c6bdc645e2f9722364e
+  sha256: 960d2387dfc08735f89e87060b4ff9e702b4cc3aae7e930ad8adbdd09b1eb4b2
 
 build:
   skip:
@@ -33,7 +33,7 @@ requirements:
     # only installs on v3-capable CPUs. This activation package is __unix-only;
     # Windows sets the flag in build.bat and adds the __archspec guard in run.
     - if: unix and x86_64
-      then: x86_64-microarch-level ==${{ microarch_level }}
+      then: x86_64-microarch-level ==${{ microarch_level | default(1) }}
     - if: unix
       then: make
     - if: win
@@ -65,8 +65,7 @@ requirements:
     - vir-simd
     - wheel
     - fftw
-    - if: osx
-      then: zlib
+    - zlib
     - if: win
       then:
 # ninja: error: 'D:/bld/warpx_1615224319242/_h_env/Library/lib/lapack.lib', needed by 'lib/warpx.rz.NOMPI.OMP.DP.OPMD.FFT.QED.dll', missing and no known rule to make it
@@ -86,7 +85,7 @@ requirements:
     # mirrors the run-export the Unix builds get and keeps the v3-built Windows
     # package from installing on pre-v3 CPUs. The -march flag is set in build.bat.
     - if: win
-      then: _x86_64-microarch-level >=${{ microarch_level }}
+      then: _x86_64-microarch-level >=${{ microarch_level | default(1) }}
 
   run_exports:
     # releases are not (yet) compatible
